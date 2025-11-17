@@ -14,6 +14,7 @@ import {
   Phone,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import AudioPlayer from "./components/AudioPlayer";
 
 const WHATSAPP_LINK =
   "https://wa.me/XXXXXXXXXX?text=Quero%20agendar%20uma%20sessao";
@@ -21,6 +22,7 @@ const WHATSAPP_LINK =
 export default function LandingRicardo() {
   return (
     <main className="min-h-screen bg-[#faf7f3] text-[#1a1a1a]">
+      <AudioPlayer />
       <Header />
       <Hero />
       <SectionDivider />
