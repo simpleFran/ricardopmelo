@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Inter, Lora } from "next/font/google";
+import type { ReactNode } from "react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -18,7 +19,12 @@ export const metadata = {
   description: "Coaching, PNL e desenvolvimento pessoal",
 };
 
-export default function RootLayout({ children }) {
+// 👉 AQUI ESTÁ A CORREÇÃO!
+interface RootLayoutProps {
+  children: ReactNode;
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="pt-br" className={`${inter.variable} ${lora.variable}`}>
       <body className="font-body">{children}</body>
