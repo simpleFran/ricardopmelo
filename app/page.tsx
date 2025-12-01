@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import AudioPlayer from "./components/AudioPlayer";
+import { InaugurationOverlay } from "./components/InaugurationOverlay";
 
 const WHATSAPP_LINK =
   "https://wa.me/XXXXXXXXXX?text=Quero%20agendar%20uma%20sessao";
@@ -23,6 +24,7 @@ export default function LandingRicardo() {
   return (
     <main className="min-h-screen bg-[#faf7f3] text-[#1a1a1a]">
       <AudioPlayer />
+      <InaugurationOverlay /> {/* AQUI: sobre tudo */}
       <Header />
       <Hero />
       <SectionDivider />
@@ -100,7 +102,7 @@ function Hero() {
           className="space-y-6"
         >
           <span className="text-xs uppercase tracking-widest text-neutral-600">
-            Coaching • PNL • Motivação
+            Mentoria de Recuperação • Desenvolvimento Humano • Motivação
           </span>
 
           <h1 className="text-4xl md:text-5xl font-bold leading-tight text-neutral-900">
@@ -109,9 +111,9 @@ function Hero() {
 
           <p className="text-neutral-700 text-lg leading-relaxed max-w-lg">
             Olá, sou <strong>Ricardo Prim Melo</strong>, especialista em
-            Coaching, PNL e desenvolvimento humano. Ajudo pessoas a
+            Mentoria de Recuperação, Desenvolvimento Humano e Motivação. Ajudo pessoas a
             reencontrarem clareza, força interior e propósito. Atendimentos
-            online via Zoom para todo o mundo.
+            online via Zoom.
           </p>
 
           <a
@@ -130,7 +132,7 @@ function Hero() {
           className="relative w-full h-[430px] rounded-3xl shadow-xl overflow-hidden"
         >
           <img
-            src="/images/ricardo/hero.png"
+            src="/images/ricardo/ricardo-prim-melo.png"
             alt="Foto de Ricardo Prim Melo"
             className="w-full h-full object-cover"
           />
@@ -250,16 +252,36 @@ function InspiracaoBaralho() {
 function Servicos() {
   const servs = [
     {
-      t: "Sessão Individual de Coaching",
-      d: "Clareza emocional, tomada de decisões e direção pessoal.",
+      t: "Acompanhamento",
+      d: "Acompanha pessoas em processo de recuperação (álcool, comportamentos aditivos, crises de vida).",
     },
     {
-      t: "PNL Aplicada",
-      d: "Mudança de hábitos, crenças limitantes e padrões mentais.",
+      t: "Gestão Pessoal",
+      d: "Ensina técnicas práticas para gestão de rotinas, sono, alimentação leve, exercício e redução de gatilhos.",
     },
     {
       t: "Acompanhamento Motivacional",
-      d: "Suporte semanal para evolução contínua.",
+      d: "Ajuda a definir metas realistas e mensuráveis (curto, médio e longo prazo).",
+    },
+    {
+      t: "Coaching de Vida",
+      d: "Trabalha ferramentas de responsabilização (checklists, relatórios semanais).",
+    },
+    {
+      t: "Suporte Emocional",
+      d: "Dá suporte emocional e escuta estruturada nas fases difíceis.",
+    },
+    {
+      t: "Integração Social",
+      d: "Facilita transição para emprego/voluntariado, integração social e atividades de propósito.",
+    },
+    {
+      t: "Desenvolvimento de Habilidades",
+      d: "Reencaminha para serviços clínicos quando necessário (psicologia, psiquiatria, centros locais).",
+    }
+    ,{
+      t: "Apoio Familiar",
+      d: " Acompanha famílias (quando solicitado) para orientar comunicação e limites saudáveis.",
     },
   ];
 
@@ -328,8 +350,8 @@ function Sobre() {
           className="rounded-3xl overflow-hidden shadow-xl h-[420px]"
         >
           <img
-            src="/images/ricardo/about.jpg"
-            className="w-full h-full object-cover"
+            src="/images/ricardo/brand-ricardo.jpg"
+            className="w-full h-full object-cover rounded-3xl"
             alt="Ricardo"
           />
         </motion.div>

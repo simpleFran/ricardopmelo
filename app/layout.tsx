@@ -15,8 +15,9 @@ const lora = Lora({
 });
 
 export const metadata = {
-  title: "Ricardo Prim Melo",
-  description: "Coaching, PNL e desenvolvimento pessoal",
+  title: " Ricardo Prim Melo — Mentor de Recuperação e Desenvolvimento Humano",
+  description:
+    "Mentor de Recuperação e Desenvolvimento Humano. Acompanhamento prático para recuperação, objetivos de vida e hábitos saudáveis. Sessões online",
 };
 
 // 👉 AQUI ESTÁ A CORREÇÃO!
