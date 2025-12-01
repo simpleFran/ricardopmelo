@@ -23,7 +23,7 @@ const WHATSAPP_LINK =
 export default function LandingRicardo() {
   return (
     <main className="min-h-screen bg-[#faf7f3] text-[#1a1a1a]">
-      <AudioPlayer />
+      {/* <AudioPlayer /> */}
       <InaugurationOverlay /> {/* AQUI: sobre tudo */}
       <Header />
       <Hero />
