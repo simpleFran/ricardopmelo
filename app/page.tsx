@@ -105,7 +105,7 @@ function Hero() {
             Mentor de Recuperação • Desenvolvimento Humano • Motivação
           </span>
 
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight text-neutral-900">
+          <h1 className="text-2xl md:text-5xl font-bold leading-tight text-neutral-900">
             Desbloqueie sua mente, transforme sua vida
           </h1>
 
@@ -321,15 +321,18 @@ function Sobre() {
         >
           <h2 className="text-2xl md:text-3xl font-bold mb-4">Sobre Ricardo</h2>
           <p className="text-neutral-700 leading-relaxed">
-            Sou <strong>Ricardo Prim Melo</strong>, profissional de Coaching e
+            Sou <strong>Ricardo Prim Melo</strong>, habilitado em Programação Neurolinguística apaixonado por desenvolvimento humano.
             Programação Neurolinguística apaixonado por desenvolvimento humano.
+            Com experiência em mentoria e coaching, já ajudei diversas pessoas a
+            superarem desafios pessoais  e profissionais.
+          </p>
             Minha missão é ajudar você a desbloquear seu potencial, superar
             bloqueios internos e reencontrar propósito.
           </p>
 
           <ul className="mt-6 space-y-2 text-sm">
             {[
-              "Atendimentos online via Zoom",
+              "Atendimentos online via Microsfot Teams",
               "Processo humano e empático",
               "Ferramentas práticas para o dia a dia",
             ].map((t) => (
