@@ -102,7 +102,7 @@ function Hero() {
           className="space-y-6"
         >
           <span className="text-xs uppercase tracking-widest text-neutral-600">
-            Mentoria de Recuperação • Desenvolvimento Humano • Motivação
+            Mentor de Recuperação • Desenvolvimento Humano • Motivação
           </span>
 
           <h1 className="text-4xl md:text-5xl font-bold leading-tight text-neutral-900">
@@ -111,7 +111,7 @@ function Hero() {
 
           <p className="text-neutral-700 text-lg leading-relaxed max-w-lg">
             Olá, sou <strong>Ricardo Prim Melo</strong>, especialista em
-            Mentoria de Recuperação, Desenvolvimento Humano e Motivação. Ajudo pessoas a
+            Mentor de Recuperação, Desenvolvimento Humano e Motivação. Ajudo pessoas a
             reencontrarem clareza, força interior e propósito. Atendimentos
             online via Zoom.
           </p>
