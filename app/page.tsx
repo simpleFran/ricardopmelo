@@ -110,10 +110,9 @@ function Hero() {
           </h1>
 
           <p className="text-neutral-700 text-lg leading-relaxed max-w-lg">
-            Olá, sou <strong>Ricardo Prim Melo</strong>, especialista em
-            Mentor de Recuperação, Desenvolvimento Humano e Motivação. Ajudo pessoas a
-            reencontrarem clareza, força interior e propósito. Atendimentos
-            online via Zoom.
+            Olá, sou <strong>Ricardo Prim Melo</strong>, Mentor de Recuperação,
+            Desenvolvimento Humano e Motivação. Ajudo pessoas a reencontrarem
+            clareza, força interior e propósito. Atendimentos online via Microsoft Teams.
           </p>
 
           <a
@@ -278,8 +277,8 @@ function Servicos() {
     {
       t: "Desenvolvimento de Habilidades",
       d: "Reencaminha para serviços clínicos quando necessário (psicologia, psiquiatria, centros locais).",
-    }
-    ,{
+    },
+    {
       t: "Apoio Familiar",
       d: " Acompanha famílias (quando solicitado) para orientar comunicação e limites saudáveis.",
     },
