@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Inter, Lora } from "next/font/google";
 import type { ReactNode } from "react";
+import {Toaster} from 'sonner'
 
 const inter = Inter({
   subsets: ["latin"],
@@ -20,7 +21,7 @@ export const metadata = {
     "Mentor de Recuperação e Desenvolvimento Humano. Acompanhamento prático para recuperação, objetivos de vida e hábitos saudáveis. Sessões online",
 };
 
-// 👉 AQUI ESTÁ A CORREÇÃO!
+
 interface RootLayoutProps {
   children: ReactNode;
 }
@@ -28,7 +29,9 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="pt-br" className={`${inter.variable} ${lora.variable}`}>
-      <body className="font-body">{children}</body>
+      <body className="font-body">{children}
+      <Toaster richColors position="top-center"/>
+      </body>
     </html>
   );
 }

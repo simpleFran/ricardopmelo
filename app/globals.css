@@ -1,17 +1,21 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-orange: #EF8B3B;
-  --color-brand-orange-dark: #C96F28;
+  --color-brand-orange: #ef8b3b;
+  --color-brand-orange-dark: #c96f28;
   --color-gray-soft: #f2f2f2;
   --color-gray-medium: #d0d0d0;
   --color-gray-dark: #1b1b1b;
   --color-black: #000000;
 }
 
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-inter);
+}
+
+body,
+html {
+  scroll-behavior: smooth;
 }

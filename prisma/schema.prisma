@@ -1,0 +1,37 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x", "linux-arm64-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Lead {
+  id           Int           @id @default(autoincrement())
+  nome         String
+  cnpj         String?
+  email        String?
+  telefone     String        @unique
+  createdAt    DateTime      @default(now())
+  agendamentos Agendamento[]
+}
+
+model Agendamento {
+  id        Int      @id @default(autoincrement())
+  leadId    Int
+  servico   String
+  dataHora  DateTime
+  status    String
+  nota      String?
+  createdAt DateTime @default(now())
+  lead      Lead     @relation(fields: [leadId], references: [id])
+}

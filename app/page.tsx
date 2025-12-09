@@ -14,9 +14,8 @@ import {
   Phone,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import AudioPlayer from "./components/AudioPlayer";
 import { InaugurationOverlay } from "./components/InaugurationOverlay";
-
+import AppointmentModal from "@/app/components/AppointmentModal";
 const WHATSAPP_LINK =
   "https://wa.me/XXXXXXXXXX?text=Quero%20agendar%20uma%20sessao";
 
@@ -73,13 +72,9 @@ function Header() {
           </a>
         </nav>
 
-        <a
-          href={WHATSAPP_LINK}
-          target="_blank"
-          className="hidden md:inline-flex items-center gap-2 rounded-xl px-4 py-2 bg-orange-600 text-white font-medium shadow hover:opacity-90"
-        >
-          Agendar sessão
-        </a>
+        <div className="hidden md:block">
+          <AppointmentModal />
+        </div>
       </div>
     </header>
   );
@@ -112,15 +107,20 @@ function Hero() {
           <p className="text-neutral-700 text-lg leading-relaxed max-w-lg">
             Olá, sou <strong>Ricardo Prim Melo</strong>, Mentor de Recuperação,
             Desenvolvimento Humano e Motivação. Ajudo pessoas a reencontrarem
-            clareza, força interior e propósito. Atendimentos online via Microsoft Teams.
+            clareza, força interior e propósito. Atendimentos online via
+            Microsoft Teams.
           </p>
 
-          <a
-            href={WHATSAPP_LINK}
-            className="inline-flex items-center gap-2 rounded-xl px-6 py-3 bg-orange-600 text-white font-semibold shadow-lg hover:opacity-95"
-          >
-            Agendar sessão <ArrowRight className="h-5 w-5" />
-          </a>
+          <div className="inline-flex gap-3 flex-wrap">
+            <AppointmentModal />
+            <a
+              href={WHATSAPP_LINK}
+              target="_blank"
+              className="inline-flex items-center gap-2 rounded-xl px-6 py-3 bg-white text-orange-700 border border-orange-200 font-semibold shadow-sm hover:bg-orange-50"
+            >
+              Falar no WhatsApp
+            </a>
+          </div>
         </motion.div>
 
         <motion.div
@@ -321,13 +321,11 @@ function Sobre() {
         >
           <h2 className="text-2xl md:text-3xl font-bold mb-4">Sobre Ricardo</h2>
           <p className="text-neutral-700 leading-relaxed">
-            Sou <strong>Ricardo Prim Melo</strong>, habilitado em Programação Neurolinguística apaixonado por desenvolvimento humano.
-            Programação Neurolinguística apaixonado por desenvolvimento humano.
-            Com experiência em mentoria e coaching, já ajudei diversas pessoas a
-            superarem desafios pessoais  e profissionais.
-          </p>
-            Minha missão é ajudar você a desbloquear seu potencial, superar
-            bloqueios internos e reencontrar propósito.
+            Sou <strong>Ricardo Prim Melo</strong>, habilitado em Programação
+            Neurolinguística apaixonado por desenvolvimento humano. Programação
+            Neurolinguística apaixonado por desenvolvimento humano. Minha missão
+            é ajudar você a desbloquear seu potencial, superar bloqueios
+            internos e reencontrar propósito.
           </p>
 
           <ul className="mt-6 space-y-2 text-sm">
