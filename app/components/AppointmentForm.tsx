@@ -3,11 +3,11 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
-import { ptBR } from "date-fns/locale";
+import { pt } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "sonner";
 
-registerLocale("ptBR", ptBR);
+registerLocale("pt", pt);
 
 type FormValues = {
   nome: string;
@@ -16,6 +16,8 @@ type FormValues = {
   servico: string;
   dataHora: Date;
 };
+
+
 
 export default function AppointmentForm({
   onSuccess,
@@ -31,22 +33,71 @@ export default function AppointmentForm({
     reset,
   } = useForm<FormValues>();
 
-
   const [loading, setLoading] = useState(false);
   const dataHora = watch("dataHora");
-  const servicos = ["Consulta Inicial", "Terapia", "Retorno"];
-  
+  const servicos = [
+    "Avaliação Inicial (60–75 min)",
+    "Pacote Mensal (4 Sessões)",
+    "Programa Intensivo – 8 Semanas",
+    "Sessão de Apoio em Crise",
+    "Acompanhamento Familiar (Sessão Conjunta)",
+    "Workshop / Grupo Temático",
+    "Retorno",
+  ];
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  
-  function formatPhone(value: string) {
-    return value
-      .replace(/\D/g, "")
-      .replace(/^(\d{2})(\d)/g, "($1) $2")
-      .replace(/(\d{5})(\d)/, "$1-$2")
-      .slice(0, 15);
-  }
+ function formatPhone(value: string) {
+   const hasPlus = value.trim().startsWith("+");
+   const digits = value.replace(/\D/g, "").slice(0, 15); // limita um pouco
 
+   if (!digits) return hasPlus ? "+" : "";
+
+   // 🇧🇷 Brasil (+55)
+   if (digits.startsWith("55")) {
+     const country = "+55";
+     const rest = digits.slice(2);
+
+     if (!rest) return country + " ";
+     if (rest.length <= 2) return `${country} ${rest}`; // +55 11
+     if (rest.length <= 7)
+       return `${country} ${rest.slice(0, 2)} ${rest.slice(2)}`; // +55 11 9xxxx
+     return `${country} ${rest.slice(0, 2)} ${rest.slice(2, 7)}-${rest.slice(
+       7,
+       11
+     )}`; // +55 11 9xxxx-xxxx
+   }
+
+   // 🇵🇹 Portugal (+351)
+   if (digits.startsWith("351")) {
+     const country = "+351";
+     const rest = digits.slice(3);
+
+     if (!rest) return country + " ";
+     if (rest.length <= 3) return `${country} ${rest}`; // +351 9xx
+     if (rest.length <= 6)
+       return `${country} ${rest.slice(0, 3)} ${rest.slice(3)}`; // +351 9xx xxx
+     return `${country} ${rest.slice(0, 3)} ${rest.slice(3, 6)} ${rest.slice(
+       6,
+       9
+     )}`; // +351 9xx xxx xxx
+   }
+
+   // 🌍 genérico com DDI (+XX...)
+   if (hasPlus) {
+     if (digits.length <= 3) return `+${digits}`;
+     if (digits.length <= 7) return `+${digits.slice(0, 3)} ${digits.slice(3)}`;
+     return `+${digits.slice(0, 3)} ${digits.slice(3, 7)} ${digits.slice(
+       7,
+       11
+     )}`;
+   }
+
+   // sem +, formato mais solto (pode ser número local)
+   if (digits.length <= 3) return digits;
+   if (digits.length <= 7) return `${digits.slice(0, 3)} ${digits.slice(3)}`;
+   return `${digits.slice(0, 3)} ${digits.slice(3, 7)} ${digits.slice(7, 11)}`;
+ }
   const onSubmit = async (data: FormValues) => {
     setLoading(true);
     try {
@@ -93,7 +144,7 @@ export default function AppointmentForm({
       />
       <input
         type="tel"
-        placeholder="Telefone"
+        placeholder="Ex: +351 9xx xxx xxx ou +55 11 9xxxx-xxx"
         {...register("telefone", {
           required: "Telefone é obrigatório",
           onChange: (e) => setValue("telefone", formatPhone(e.target.value)),
@@ -103,7 +154,7 @@ export default function AppointmentForm({
       {errors.telefone && (
         <p className="text-sm text-red-600">{errors.telefone.message}</p>
       )}
-     
+
       <div className="relative">
         <button
           type="button"
@@ -140,12 +191,12 @@ export default function AppointmentForm({
         showTimeSelect
         timeIntervals={30}
         dateFormat="Pp"
-        locale="ptBR"
+        locale="pt"
         placeholderText="Selecione data e hora"
         className="border p-3 rounded-md w-full"
         timeCaption="Horário"
         popperPlacement="bottom-start"
-        popperClassName="datepicker-popper" // 👈 add class
+        popperClassName="datepicker-popper"
       />
       {errors.dataHora && (
         <p className="text-sm text-orange-600">Selecione uma data e hora</p>
