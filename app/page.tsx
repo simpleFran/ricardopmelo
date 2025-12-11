@@ -165,33 +165,108 @@ function SectionSoft() {
 // ============================================================================
 // FRASES MOTIVACIONAIS
 // ============================================================================
+// ============================================================================
+// FRASES / REFLEXÕES VINDAS DO BANCO
+// ============================================================================
+type ReflexaoPublic = {
+  id: number;
+  titulo: string;
+  texto: string;
+  destaque: boolean;
+  publicado: boolean;
+  ordem: number | null;
+};
+
 function Quotes() {
-  const fr = [
-    "A solução é mais simples do que imaginamos.",
-    "Uma fé sem obras é uma fé morta.",
-    "A melhor maneira de se encontrar é se perder no serviço aos outros. — Mahatma Gandhi",
-  ];
+  const [items, setItems] = useState<ReflexaoPublic[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function load() {
+      try {
+        const res = await fetch("/api/reflexoes");
+        if (!res.ok) throw new Error("Erro ao carregar reflexões");
+
+        const data = (await res.json()) as ReflexaoPublic[];
+
+        if (cancelled) return;
+
+        // só publicadas
+        const publicadas = data.filter((r) => r.publicado);
+
+        // ordena: destaque primeiro, depois ordem, depois id
+        publicadas.sort((a, b) => {
+          if (a.destaque && !b.destaque) return -1;
+          if (!a.destaque && b.destaque) return 1;
+          if (a.ordem != null && b.ordem != null) return a.ordem - b.ordem;
+          if (a.ordem != null) return -1;
+          if (b.ordem != null) return 1;
+          return a.id - b.id;
+        });
+
+        // pega no máximo 3
+        setItems(publicadas.slice(0, 3));
+      } catch (err) {
+        console.error(err);
+        if (!cancelled) setError("Não foi possível carregar reflexões.");
+      }
+    }
+
+    load();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <section className="max-w-6xl mx-auto px-4 py-16">
       <h2 className="text-2xl md:text-3xl font-bold mb-8">Reflexões</h2>
-      <div className="grid md:grid-cols-3 gap-6">
-        {fr.map((q, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: i * 0.1 }}
-            viewport={{ once: true }}
-            className="p-6 rounded-3xl bg-white border border-neutral-200 shadow-sm"
-          >
-            <p className="text-neutral-700 italic">“{q}”</p>
-          </motion.div>
-        ))}
-      </div>
+
+      {error && (
+        <p className="text-sm text-red-600 mb-4">{error}</p>
+      )}
+
+      {items === null ? (
+        <div className="grid md:grid-cols-3 gap-6">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div
+              key={i}
+              className="p-6 rounded-3xl bg-white border border-neutral-200 shadow-sm animate-pulse"
+            >
+              <div className="h-3 w-3/4 bg-neutral-200 rounded mb-3" />
+              <div className="h-3 w-full bg-neutral-200 rounded mb-2" />
+              <div className="h-3 w-5/6 bg-neutral-200 rounded" />
+            </div>
+          ))}
+        </div>
+      ) : items.length === 0 ? (
+        <p className="text-sm text-neutral-600">
+          Em breve, reflexões do Ricardo aparecerão aqui.
+        </p>
+      ) : (
+        <div className="grid md:grid-cols-3 gap-6">
+          {items.map((q) => (
+            <div
+              key={q.id}
+              className="p-6 rounded-3xl bg-white border border-neutral-200 shadow-sm"
+            >
+              {q.titulo && (
+                <h3 className="text-sm font-semibold mb-2">{q.titulo}</h3>
+              )}
+              <p className="text-neutral-700 italic text-sm whitespace-pre-line">
+                “{q.texto}”
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
+
 
 // ============================================================================
 // SEÇÃO INSPIRAÇÃO — EFEITO "BARALHO"
@@ -361,46 +436,105 @@ function Sobre() {
 }
 
 // ============================================================================
-// DEPOIMENTOS
+// DEPOIMENTOS VINDOS DO BANCO
 // ============================================================================
+type DepoimentoPublic = {
+  id: number;
+  nome: string;
+  texto: string;
+  origem: string | null;
+  destaque: boolean;
+  publicado: boolean;
+  ordem: number | null;
+};
+
 function Depoimentos() {
-  const itens = [
-    {
-      n: "Aline M.",
-      t: "Encontrei clareza que eu buscava há anos. Recomendo demais!",
-    },
-    {
-      n: "Jorge R.",
-      t: "Mudança profunda nas minhas crenças e objetivos. Gratidão!",
-    },
-    {
-      n: "Patrícia S.",
-      t: "Ricardo tem uma energia única. Me ajudou num momento decisivo.",
-    },
-  ];
+  const [items, setItems] = useState<DepoimentoPublic[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function load() {
+      try {
+        const res = await fetch("/api/depoimentos");
+        if (!res.ok) throw new Error("Erro ao carregar depoimentos");
+
+        const data = (await res.json()) as DepoimentoPublic[];
+
+        if (cancelled) return;
+
+        const publicos = data.filter((d) => d.publicado);
+
+        publicos.sort((a, b) => {
+          if (a.destaque && !b.destaque) return -1;
+          if (!a.destaque && b.destaque) return 1;
+          if (a.ordem != null && b.ordem != null) return a.ordem - b.ordem;
+          if (a.ordem != null) return -1;
+          if (b.ordem != null) return 1;
+          return a.id - b.id;
+        });
+
+        setItems(publicos.slice(0, 3));
+      } catch (err) {
+        console.error(err);
+        if (!cancelled) setError("Não foi possível carregar depoimentos.");
+      }
+    }
+
+    load();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <section className="max-w-6xl mx-auto px-4 py-16">
       <h2 className="text-2xl md:text-3xl font-bold mb-8">Depoimentos</h2>
-      <div className="grid md:grid-cols-3 gap-6">
-        {itens.map((i) => (
-          <motion.div
-            key={i.n}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="rounded-3xl bg-white border border-neutral-200 p-6 shadow-sm"
-          >
-            <div className="text-orange-600 mb-2">★★★★★</div>
-            <p className="text-neutral-700 text-sm mb-4">“{i.t}”</p>
-            <div className="font-semibold text-sm">{i.n}</div>
-          </motion.div>
-        ))}
-      </div>
+
+      {error && (
+        <p className="text-sm text-red-600 mb-4">{error}</p>
+      )}
+
+      {items === null ? (
+        <div className="grid md:grid-cols-3 gap-6">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div
+              key={i}
+              className="rounded-3xl bg-white border border-neutral-200 p-6 shadow-sm animate-pulse"
+            >
+              <div className="h-3 w-1/3 bg-neutral-200 rounded mb-3" />
+              <div className="h-3 w-full bg-neutral-200 rounded mb-2" />
+              <div className="h-3 w-5/6 bg-neutral-200 rounded" />
+            </div>
+          ))}
+        </div>
+      ) : items.length === 0 ? (
+        <p className="text-sm text-neutral-600">
+          Assim que os primeiros depoimentos forem cadastrados, aparecerão aqui.
+        </p>
+      ) : (
+        <div className="grid md:grid-cols-3 gap-6">
+          {items.map((d) => (
+            <div
+              key={d.id}
+              className="rounded-3xl bg-white border border-neutral-200 p-6 shadow-sm"
+            >
+              <div className="text-orange-600 mb-2">★★★★★</div>
+              <p className="text-neutral-700 text-sm mb-4">“{d.texto}”</p>
+              <div className="text-sm font-semibold">{d.nome}</div>
+              {d.origem && (
+                <div className="text-xs text-neutral-500">{d.origem}</div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
+
 
 // ============================================================================
 // CTA FINAL

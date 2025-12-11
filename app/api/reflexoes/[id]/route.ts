@@ -1,0 +1,82 @@
+// app/api/reflexoes/[id]/route.ts
+export const runtime = "nodejs";
+
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+
+type Ctx = { params: Promise<{ id: string }> | { id: string } };
+
+async function getIdFromContext(context: Ctx) {
+    const params = await context.params;
+    const id = Number(params.id);
+    return id;
+}
+
+export async function PATCH(req: Request, context: Ctx) {
+    const id = await getIdFromContext(context);
+
+    if (Number.isNaN(id) || id <= 0) {
+        return NextResponse.json(
+            { error: "ID inválido" },
+            { status: 400 }
+        );
+    }
+
+    try {
+        const body = await req.json();
+
+        const { titulo, texto, destaque, ordem, publicado } = body as {
+            titulo?: string;
+            texto?: string;
+            destaque?: boolean;
+            ordem?: number | null;
+            publicado?: boolean;
+        };
+
+        const data: Record<string, unknown> = {};
+
+        if (titulo !== undefined) data.titulo = titulo;
+        if (texto !== undefined) data.texto = texto;
+        if (destaque !== undefined) data.destaque = Boolean(destaque);
+        if (ordem !== undefined) data.ordem = ordem;
+        if (publicado !== undefined) data.publicado = Boolean(publicado);
+
+        const updated = await prisma.reflexao.update({
+            where: { id },
+            data,
+        });
+
+        return NextResponse.json(updated);
+    } catch (err) {
+        console.error("Erro ao atualizar reflexão", err);
+        return NextResponse.json(
+            { error: "Erro ao atualizar reflexão" },
+            { status: 500 }
+        );
+    }
+}
+
+export async function DELETE(_req: Request, context: Ctx) {
+    const id = await getIdFromContext(context);
+
+    if (Number.isNaN(id) || id <= 0) {
+        return NextResponse.json(
+            { error: "ID inválido" },
+            { status: 400 }
+        );
+    }
+
+    try {
+        await prisma.reflexao.delete({
+            where: { id },
+        });
+
+        return NextResponse.json({ ok: true });
+    } catch (err) {
+        console.error("Erro ao excluir reflexão", err);
+        return NextResponse.json(
+            { error: "Erro ao excluir reflexão" },
+            { status: 500 }
+        );
+    }
+}

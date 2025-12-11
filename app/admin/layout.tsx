@@ -2,7 +2,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { Calendar, Users, Quote, MessageCircle } from "lucide-react";
-
+import {Toaster} from 'sonner'
 export const metadata = {
   title: "Admin • Ricardo Prim Melo",
 };
@@ -69,7 +69,10 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           </div>
 
           {/* Conteúdo */}
-          <main className="flex-1">{children}</main>
+          <main className="flex-1">
+            {children}
+            <Toaster richColors position="top-center" />
+          </main>
         </div>
       </body>
     </html>
