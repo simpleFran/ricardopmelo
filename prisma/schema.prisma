@@ -35,3 +35,25 @@ model Agendamento {
   createdAt DateTime @default(now())
   lead      Lead     @relation(fields: [leadId], references: [id])
 }
+model Reflexao {
+  id        Int      @id @default(autoincrement())
+  titulo    String
+  texto     String
+  destaque  Boolean  @default(false) // se quiser marcar algumas pro site
+  ordem     Int?                 // opcional, pra ordenar manualmente
+  publicado Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Depoimento {
+  id         Int      @id @default(autoincrement())
+  nome       String
+  texto      String
+  origem     String?              // ex: "Lisboa", "Online", "Instagram"
+  destaque   Boolean  @default(false)
+  ordem      Int?
+  publicado  Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
