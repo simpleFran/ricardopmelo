@@ -16,14 +16,15 @@ import {
 import { useEffect, useState } from "react";
 import { InaugurationOverlay } from "./components/InaugurationOverlay";
 import AppointmentModal from "@/app/components/AppointmentModal";
+import Image from "next/image";
 const WHATSAPP_LINK =
-  "https://wa.me/XXXXXXXXXX?text=Quero%20agendar%20uma%20sessao";
+  "https://wa.me/+351967246075?text=Quero%20agendar%20uma%20sessao";
 
 export default function LandingRicardo() {
   return (
     <main className="min-h-screen bg-[#faf7f3] text-[#1a1a1a]">
       {/* <AudioPlayer /> */}
-      <InaugurationOverlay /> {/* AQUI: sobre tudo */}
+      {/* <InaugurationOverlay />  */}
       <Header />
       <Hero />
       <SectionDivider />
@@ -32,6 +33,7 @@ export default function LandingRicardo() {
       <InspiracaoBaralho />
       <SectionSoft />
       <Servicos />
+      <MentorRole />
       <SectionSoft />
       <Sobre />
       <Depoimentos />
@@ -63,6 +65,9 @@ function Header() {
         <nav className="hidden md:flex items-center gap-6 text-sm">
           <a href="#servicos" className="hover:opacity-70">
             Serviços
+          </a>
+          <a href="#mentor" className="hover:opacity-70">
+            Acompanhamento
           </a>
           <a href="#sobre" className="hover:opacity-70">
             Sobre
@@ -105,10 +110,11 @@ function Hero() {
           </h1>
 
           <p className="text-neutral-700 text-lg leading-relaxed max-w-lg">
-            Olá, sou <strong>Ricardo Prim Melo</strong>, Mentor de Recuperação,
-            Desenvolvimento Humano e Motivação. Ajudo pessoas a reencontrarem
-            clareza, força interior e propósito. Atendimentos online via
-            Microsoft Teams.
+            Olá, sou <strong>Ricardo Prim Melo</strong>, Mentor de Recuperação e
+            Desenvolvimento Humano. Acompanho pessoas em fases de recomeço,
+            reconstrução e mudança de hábitos, com foco em clareza,
+            responsabilidade e propósito. Atendimentos online via Microsoft
+            Teams para Brasil, Portugal e comunidade lusófona.
           </p>
 
           <div className="inline-flex gap-3 flex-wrap">
@@ -130,10 +136,12 @@ function Hero() {
           viewport={{ once: true }}
           className="relative w-full h-[430px] rounded-3xl shadow-xl overflow-hidden"
         >
-          <img
+          <Image
             src="/images/ricardo/ricardo-prim-melo.png"
             alt="Foto de Ricardo Prim Melo"
             className="w-full h-full object-cover"
+            width={200}
+            height={200}
           />
         </motion.div>
       </div>
@@ -159,6 +167,56 @@ function SectionDivider() {
 function SectionSoft() {
   return (
     <div className="h-10 w-full bg-gradient-to-b from-orange-50 to-white" />
+  );
+}
+
+// ============================================================================
+// O QUE FAZ UM MENTOR – NOVA SEÇÃO
+// ============================================================================
+function MentorRole() {
+  const itens = [
+    "Acompanha pessoas em processo de recuperação (álcool, comportamentos aditivos, crises de vida).",
+    "Ajuda a definir metas realistas e mensuráveis (curto, médio e longo prazo).",
+    "Ensina técnicas práticas para gestão de rotinas, sono, alimentação leve, exercício e redução de gatilhos.",
+    "Trabalha ferramentas de responsabilização (checklists, relatórios semanais).",
+    "Oferece suporte emocional e escuta estruturada nas fases difíceis.",
+    "Facilita transição para emprego/voluntariado, integração social e atividades de propósito.",
+    "Reencaminha para serviços clínicos quando necessário (psicologia, psiquiatria, centros locais).",
+    "Orienta famílias (quando solicitado) sobre comunicação e limites saudáveis.",
+  ];
+
+  return (
+    <section id="mentor" className="max-w-6xl mx-auto px-4 py-16 scroll-mt-12">
+      <h2 className="text-2xl md:text-3xl font-bold mb-6">
+        Como funciona o Acompanhamento
+      </h2>
+
+      <p className="text-neutral-700 text-lg leading-relaxed mb-8 max-w-3xl">
+        A mentoria combina práticas de desenvolvimento humano, gestão pessoal e
+        suporte motivacional para ajudar você a retomar equilíbrio, clareza e
+        autonomia — sempre com respeito ao seu ritmo e à sua história.
+      </p>
+
+      <ul className="grid md:grid-cols-2 gap-6">
+        {itens.map((txt, i) => (
+          <li
+            key={i}
+            className="flex items-start gap-3 p-5 bg-white rounded-2xl border border-neutral-200 shadow-sm"
+          >
+            <span className="text-orange-600 text-xl mt-1">•</span>
+            <p className="text-neutral-700 text-sm leading-relaxed">{txt}</p>
+          </li>
+        ))}
+      </ul>
+
+      {/* Aviso legal */}
+      <div className="mt-10 p-5 rounded-2xl bg-orange-50 border border-orange-200 text-sm text-orange-800">
+        <strong>Aviso Importante:</strong> Os serviços de mentoria não
+        substituem acompanhamento psicológico ou psiquiátrico. Em situações de
+        risco, crise emocional severa ou necessidade clínica, procure serviços
+        de emergência ou profissionais de saúde mental qualificados.
+      </div>
+    </section>
   );
 }
 
@@ -225,9 +283,7 @@ function Quotes() {
     <section className="max-w-6xl mx-auto px-4 py-16">
       <h2 className="text-2xl md:text-3xl font-bold mb-8">Reflexões</h2>
 
-      {error && (
-        <p className="text-sm text-red-600 mb-4">{error}</p>
-      )}
+      {error && <p className="text-sm text-red-600 mb-4">{error}</p>}
 
       {items === null ? (
         <div className="grid md:grid-cols-3 gap-6">
@@ -266,7 +322,6 @@ function Quotes() {
     </section>
   );
 }
-
 
 // ============================================================================
 // SEÇÃO INSPIRAÇÃO — EFEITO "BARALHO"
@@ -360,7 +415,10 @@ function Servicos() {
   ];
 
   return (
-    <section id="servicos" className="max-w-6xl mx-auto px-4 py-16">
+    <section
+      id="servicos"
+      className="max-w-6xl mx-auto px-4 py-16 scroll-mt-24"
+    >
       <h2 className="text-2xl md:text-3xl font-bold mb-8">Serviços</h2>
       <div className="grid md:grid-cols-3 gap-6">
         {servs.map((s, i) => (
@@ -386,7 +444,7 @@ function Servicos() {
 // ============================================================================
 function Sobre() {
   return (
-    <section id="sobre" className="max-w-6xl mx-auto px-4 py-16">
+    <section id="sobre" className="max-w-6xl mx-auto px-4 py-16 scroll-mt-12">
       <div className="grid md:grid-cols-2 gap-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -397,17 +455,17 @@ function Sobre() {
           <h2 className="text-2xl md:text-3xl font-bold mb-4">Sobre Ricardo</h2>
           <p className="text-neutral-700 leading-relaxed">
             Sou <strong>Ricardo Prim Melo</strong>, habilitado em Programação
-            Neurolinguística apaixonado por desenvolvimento humano. Programação
-            Neurolinguística apaixonado por desenvolvimento humano. Minha missão
-            é ajudar você a desbloquear seu potencial, superar bloqueios
-            internos e reencontrar propósito.
+            Neurolinguística e apaixonado por desenvolvimento humano. Minha
+            missão é acompanhar pessoas em processos de recuperação, mudança de
+            hábitos e reorganização de vida, ajudando a ganhar clareza,
+            autonomia e sentido no dia a dia.
           </p>
 
           <ul className="mt-6 space-y-2 text-sm">
             {[
-              "Atendimentos online via Microsfot Teams",
-              "Processo humano e empático",
-              "Ferramentas práticas para o dia a dia",
+              "Atendimentos online via Microsoft Teams",
+              "Abordagem humana, respeitosa e estruturada",
+              "Ferramentas práticas para aplicar entre uma sessão e outra",
             ].map((t) => (
               <li key={t} className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 text-orange-600" />
@@ -493,9 +551,7 @@ function Depoimentos() {
     <section className="max-w-6xl mx-auto px-4 py-16">
       <h2 className="text-2xl md:text-3xl font-bold mb-8">Depoimentos</h2>
 
-      {error && (
-        <p className="text-sm text-red-600 mb-4">{error}</p>
-      )}
+      {error && <p className="text-sm text-red-600 mb-4">{error}</p>}
 
       {items === null ? (
         <div className="grid md:grid-cols-3 gap-6">
@@ -535,19 +591,19 @@ function Depoimentos() {
   );
 }
 
-
 // ============================================================================
 // CTA FINAL
 // ============================================================================
 function CTA() {
   return (
-    <section id="contato" className="max-w-6xl mx-auto px-4 py-20">
+    <section id="contato" className="max-w-6xl mx-auto px-4 py-20 scroll-mt-12">
       <div className="rounded-3xl bg-white border border-neutral-200 p-10 text-center shadow-sm">
         <h3 className="text-2xl md:text-3xl font-bold mb-3">
-          Pronto para sua transformação?
+          Quer dar um próximo passo com segurança?
         </h3>
         <p className="text-neutral-700 mb-6">
-          Dê o primeiro passo. Agende sua sessão agora mesmo.
+          Agende uma conversa inicial para entender sua fase, seus desafios e
+          ver se a mentoria faz sentido para você neste momento.
         </p>
 
         <a
@@ -562,33 +618,50 @@ function CTA() {
 }
 
 // ============================================================================
-// FOOTER
+// FOOTER (atualizado com aviso legal resumido)
 // ============================================================================
 function Footer() {
   return (
     <footer className="border-t border-neutral-200 py-8">
-      <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between text-sm text-neutral-600 gap-3">
-        © {new Date().getFullYear()} Ricardo Prim Melo — Todos os direitos
-        reservados.
-        <div className="flex items-center gap-4">
-          <a
-            href="#"
-            className="hover:opacity-70 inline-flex items-center gap-2"
-          >
-            <Instagram className="h-4 w-4" /> Instagram
+      <div className="max-w-6xl mx-auto px-4 space-y-4">
+        {/* Aviso curto */}
+        <p className="text-[11px] leading-relaxed text-neutral-500 text-center md:text-left">
+          Aviso: Os serviços prestados por Ricardo Prim Melo como Mentor de
+          Recuperação e Desenvolvimento Humano são de natureza educacional e
+          motivacional, e não substituem acompanhamento psicológico, médico ou
+          psiquiátrico. Em situações de emergência ou risco, procure serviços de
+          saúde ou de emergência na sua região.{" "}
+          <a href="/aviso-legal" className="underline hover:text-neutral-700">
+            Leia o aviso legal completo.
           </a>
-          <a
-            href="#"
-            className="hover:opacity-70 inline-flex items-center gap-2"
-          >
-            <Facebook className="h-4 w-4" /> Facebook
-          </a>
-          <a
-            href="#"
-            className="hover:opacity-70 inline-flex items-center gap-2"
-          >
-            <MapPin className="h-4 w-4" /> Localização
-          </a>
+        </p>
+
+        <div className="flex flex-col md:flex-row items-center justify-between text-sm text-neutral-600 gap-3">
+          <div className="text-center md:text-left">
+            © {new Date().getFullYear()} Ricardo Prim Melo — Todos os direitos
+            reservados.
+          </div>
+
+          <div className="flex items-center gap-4">
+            <a
+              href="#"
+              className="hover:opacity-70 inline-flex items-center gap-2"
+            >
+              <Instagram className="h-4 w-4" /> Instagram
+            </a>
+            <a
+              href="#"
+              className="hover:opacity-70 inline-flex items-center gap-2"
+            >
+              <Facebook className="h-4 w-4" /> Facebook
+            </a>
+            <a
+              href="#"
+              className="hover:opacity-70 inline-flex items-center gap-2"
+            >
+              <MapPin className="h-4 w-4" /> Localização
+            </a>
+          </div>
         </div>
       </div>
     </footer>
