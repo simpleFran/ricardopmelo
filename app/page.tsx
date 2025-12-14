@@ -1,22 +1,14 @@
-// Next.js + TailwindCSS — Landing Page para Ricardo Prim Melo (Coaching & PNL)
+// Next.js + TailwindCSS — Landing Page para Ricardo Prim Melo (Mentor de Recuperação e Desenvolvimento Humano)
 // MVP inicial — totalmente adaptado a partir da landing base da Clínica Dharma
 // Estrutura premium, hero com foto, frases motivacionais, seção de inspiração (efeito baralho), serviços, bio, depoimentos, CTA etc.
 // OBS: Substitua as imagens reais nos caminhos indicados em cada seção.
 
 "use client";
-import { AnimatePresence, motion } from "framer-motion";
-import {
-  ArrowRight,
-  CheckCircle2,
-  Facebook,
-  Instagram,
-  MapPin,
-  Phone,
-} from "lucide-react";
-import { useEffect, useState } from "react";
-import { InaugurationOverlay } from "./components/InaugurationOverlay";
 import AppointmentModal from "@/app/components/AppointmentModal";
+import { AnimatePresence, motion } from "framer-motion";
+import { CheckCircle2, Facebook, Instagram, MapPin, Phone } from "lucide-react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 const WHATSAPP_LINK =
   "https://wa.me/+351967246075?text=Quero%20agendar%20uma%20sessao";
 
@@ -38,6 +30,8 @@ export default function LandingRicardo() {
       <Sobre />
       <Depoimentos />
       <SectionSoft />
+      <FAQ/>
+      <SectionSoft />
       <CTA />
       <Footer />
     </main>
@@ -52,10 +46,12 @@ function Header() {
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-neutral-200">
       <div className="max-w-6xl mx-auto px-4 h-20 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <img
+          <Image
             src="/images/logo-transparente.png"
             alt="Ricardo Prim Melo Logo"
             className="h-76 w-76 object-contain"
+            width={76}
+            height={76}
           />
           {/* <span className="font-semibold tracking-tight hidden sm:block">
             Ricardo Prim Melo
@@ -71,6 +67,9 @@ function Header() {
           </a>
           <a href="#sobre" className="hover:opacity-70">
             Sobre
+          </a>
+          <a href="#faq" className="hover:opacity-70">
+            FAQ
           </a>
           <a href="#contato" className="hover:opacity-70">
             Contato
@@ -106,15 +105,14 @@ function Hero() {
           </span>
 
           <h1 className="text-2xl md:text-5xl font-bold leading-tight text-neutral-900">
-            Desbloqueie sua mente, transforme sua vida
+            “Da recuperação ao desenvolvimento pessoal — passo a passo.”
           </h1>
 
           <p className="text-neutral-700 text-lg leading-relaxed max-w-lg">
-            Olá, sou <strong>Ricardo Prim Melo</strong>, Mentor de Recuperação e
-            Desenvolvimento Humano. Acompanho pessoas em fases de recomeço,
-            reconstrução e mudança de hábitos, com foco em clareza,
-            responsabilidade e propósito. Atendimentos online via Microsoft
-            Teams para Brasil, Portugal e comunidade lusófona.
+            Olá, sou <strong>Ricardo Prim Melo</strong>. Ajudo pessoas em
+            processo de recuperação a reconquistar equilíbrio, propósito e
+            hábitos saudáveis — com orientação prática, apoio emocional e
+            ferramentas de desenvolvimento humano.
           </p>
 
           <div className="inline-flex gap-3 flex-wrap">
@@ -179,22 +177,18 @@ function MentorRole() {
     "Ajuda a definir metas realistas e mensuráveis (curto, médio e longo prazo).",
     "Ensina técnicas práticas para gestão de rotinas, sono, alimentação leve, exercício e redução de gatilhos.",
     "Trabalha ferramentas de responsabilização (checklists, relatórios semanais).",
-    "Oferece suporte emocional e escuta estruturada nas fases difíceis.",
+    "Dá suporte emocional e escuta estruturada nas fases difíceis.",
     "Facilita transição para emprego/voluntariado, integração social e atividades de propósito.",
     "Reencaminha para serviços clínicos quando necessário (psicologia, psiquiatria, centros locais).",
-    "Orienta famílias (quando solicitado) sobre comunicação e limites saudáveis.",
+    "Acompanha famílias (quando solicitado) sobre comunicação e limites saudáveis.",
   ];
 
   return (
     <section id="mentor" className="max-w-6xl mx-auto px-4 py-16 scroll-mt-12">
-      <h2 className="text-2xl md:text-3xl font-bold mb-6">
-        Como funciona o Acompanhamento
-      </h2>
+      <h2 className="text-2xl md:text-3xl font-bold mb-6">Acompanhamento</h2>
 
       <p className="text-neutral-700 text-lg leading-relaxed mb-8 max-w-3xl">
-        A mentoria combina práticas de desenvolvimento humano, gestão pessoal e
-        suporte motivacional para ajudar você a retomar equilíbrio, clareza e
-        autonomia — sempre com respeito ao seu ritmo e à sua história.
+        Acompanhamento
       </p>
 
       <ul className="grid md:grid-cols-2 gap-6">
@@ -211,14 +205,138 @@ function MentorRole() {
 
       {/* Aviso legal */}
       <div className="mt-10 p-5 rounded-2xl bg-orange-50 border border-orange-200 text-sm text-orange-800">
-        <strong>Aviso Importante:</strong> Os serviços de mentoria não
-        substituem acompanhamento psicológico ou psiquiátrico. Em situações de
-        risco, crise emocional severa ou necessidade clínica, procure serviços
-        de emergência ou profissionais de saúde mental qualificados.
+        <strong>Aviso Importante:</strong> Todos estes serviços não substituem
+        acompanhamento psicológico ou psiquiátrico. Em situações de risco, crise
+        emocional severa ou necessidade clínica, procure serviços de emergência
+        ou profissionais de saúde mental qualificados.
       </div>
     </section>
   );
 }
+// ============================================================================
+// FAQ (numerado + animação suave)
+// ============================================================================
+function FAQ() {
+  const items = [
+    {
+      q: "És terapeuta?",
+      a: "Não — sou mentor. Ofereço apoio prático, responsabilidade e ferramentas de desenvolvimento. Em caso de necessidade clínica, reencaminho para profissionais adequados.",
+    },
+    {
+      q: "Como funciona uma sessão?",
+      a: "Sessões online ou presenciais, 50 minutos, com tarefas práticas entre sessões.",
+    },
+    {
+      q: "Quantas sessões preciso?",
+      a: "Depende dos objetivos. Pacotes de 1 mês (4 sessões) são comuns; programas de 8–12 semanas para mudanças mais profundas.",
+    },
+    {
+      q: "Trabalhas com dependências?",
+      a: "Sim — apoio na recuperação, gestão de gatilhos, planeamento e reintegração; não substituo tratamentos médicos.",
+    },
+    {
+      q: "Falas com a família?",
+      a: "Sim, com autorização do cliente, posso fazer sessões familiares para orientar comunicação e limites.",
+    },
+    {
+      q: "Há suporte entre sessões?",
+      a: "Sim — suporte por mensagens limitado conforme o pacote contratado.",
+    },
+    {
+      q: "Privacidade — o que partilhas?",
+      a: "Tudo o que falarmos é confidencial salvo risco de dano grave a si ou a terceiros (obrigação legal).",
+    },
+    {
+      q: "Como pago / cancelo?",
+      a: "Pagamento por transferência / MB WAY / outro — cancelamentos até 24h antes sem custo; depois pode haver taxa.",
+    },
+    {
+      q: "Tens formação?",
+      a: "Aqui inclui cursos, certificações ou experiência voluntária — sem afirmar diplomas que não tens. Quando tiveres os detalhes, eu ajudo a escrever este trecho com precisão.",
+    },
+    {
+      q: "Como marcar?",
+      a: 'Botão “Agendar sessão” → WhatsApp / Calendly / formulário de contacto, conforme estiver configurado.',
+    },
+  ];
+
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  return (
+    <section id="faq" className="scroll-mt-24 max-w-6xl mx-auto px-4 py-16">
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+        <div>
+          <h2 className="text-2xl md:text-3xl font-bold">FAQ</h2>
+          <p className="text-neutral-700 mt-2 max-w-2xl">
+            Respostas diretas para dúvidas comuns sobre a mentoria e o
+            acompanhamento.
+          </p>
+        </div>
+      </div>
+
+      {/* <div className="grid md:grid-cols-2 gap-6"> */}
+      <div className="space-y-4">
+        {items.map((it, idx) => {
+          const isOpen = openIndex === idx;
+          const number = String(idx + 1).padStart(2, "0");
+
+          return (
+            <div
+              key={it.q}
+              className="rounded-3xl bg-white border border-neutral-200 shadow-sm overflow-hidden"
+            >
+              <button
+                type="button"
+                onClick={() => setOpenIndex(isOpen ? null : idx)}
+                className="w-full text-left p-5 flex items-start justify-between gap-4 hover:bg-neutral-50 transition"
+              >
+                <div className="flex items-start gap-3">
+                  <span className="shrink-0 text-[11px] font-semibold px-2 py-1 rounded-full border border-orange-200 bg-orange-50 text-orange-700 mt-0.5">
+                    {number}
+                  </span>
+                  <span className="font-semibold text-sm md:text-base text-neutral-900">
+                    {it.q}
+                  </span>
+                </div>
+
+                <span
+                  className={`shrink-0 text-neutral-500 transition-transform ${
+                    isOpen ? "rotate-45" : "rotate-0"
+                  }`}
+                >
+                  +
+                </span>
+              </button>
+
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    className="px-5"
+                  >
+                    <div className="pb-5 text-sm text-neutral-700 leading-relaxed">
+                      {it.a}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="mt-10 rounded-2xl bg-orange-50 border border-orange-200 p-5 text-sm text-orange-800">
+        <strong>Nota:</strong> Este acompanhamento não substitui psicoterapia ou
+        cuidados médicos. Em situações de crise, procure serviços de emergência
+        e profissionais de saúde mental qualificados.
+      </div>
+    </section>
+  );
+}
+
 
 // ============================================================================
 // FRASES MOTIVACIONAIS
@@ -381,37 +499,37 @@ function InspiracaoBaralho() {
 function Servicos() {
   const servs = [
     {
+      t: "Avaliação Inicial",
+      d: "Sessão de avaliação inicial — 60–75 min.",
+    },
+    {
+      t: "Sessões Individuais",
+      d: "Sessões individuais de mentoria — 50 min.",
+    },
+    {
+      t: "Pacotes Mensais",
+      d: "Pacotes mensais (4 sessões) + suporte por mensagem/WhatsApp limitado.",
+    },
+    {
+      t: "Programa Intensivo",
+      d: "Programa intensivo de 8 semanas (combinação de sessões + tarefas semanais).",
+    },
+    {
+      t: "Sessões Pontuais",
+      d: "Sessões pontuais de crise (disponibilidade limitada).",
+    },
+    {
+      t: "Workshops",
+      d: "Workshops / grupos pequenos (temas: rotina, objetivos SMART, gestão de gatilhos).",
+    },
+    {
       t: "Acompanhamento",
-      d: "Acompanha pessoas em processo de recuperação (álcool, comportamentos aditivos, crises de vida).",
+      d: "Acompanhamento familiar (sessão conjunta / mediada)",
     },
-    {
-      t: "Gestão Pessoal",
-      d: "Ensina técnicas práticas para gestão de rotinas, sono, alimentação leve, exercício e redução de gatilhos.",
-    },
-    {
-      t: "Acompanhamento Motivacional",
-      d: "Ajuda a definir metas realistas e mensuráveis (curto, médio e longo prazo).",
-    },
-    {
-      t: "Coaching de Vida",
-      d: "Trabalha ferramentas de responsabilização (checklists, relatórios semanais).",
-    },
-    {
-      t: "Suporte Emocional",
-      d: "Dá suporte emocional e escuta estruturada nas fases difíceis.",
-    },
-    {
-      t: "Integração Social",
-      d: "Facilita transição para emprego/voluntariado, integração social e atividades de propósito.",
-    },
-    {
-      t: "Desenvolvimento de Habilidades",
-      d: "Reencaminha para serviços clínicos quando necessário (psicologia, psiquiatria, centros locais).",
-    },
-    {
-      t: "Apoio Familiar",
-      d: " Acompanha famílias (quando solicitado) para orientar comunicação e limites saudáveis.",
-    },
+    // {
+    //   t: "Apoio Familiar",
+    //   d: " Acompanha famílias (quando solicitado) para orientar comunicação e limites saudáveis.",
+    // },
   ];
 
   return (
@@ -453,12 +571,19 @@ function Sobre() {
           viewport={{ once: true }}
         >
           <h2 className="text-2xl md:text-3xl font-bold mb-4">Sobre Ricardo</h2>
-          <p className="text-neutral-700 leading-relaxed">
-            Sou <strong>Ricardo Prim Melo</strong>, habilitado em Programação
-            Neurolinguística e apaixonado por desenvolvimento humano. Minha
-            missão é acompanhar pessoas em processos de recuperação, mudança de
-            hábitos e reorganização de vida, ajudando a ganhar clareza,
-            autonomia e sentido no dia a dia.
+          <p className="text-neutral-700 leading-relaxed text-justify">
+            Chamo-me <strong>Ricardo Prim Melo</strong> e trabalho como Mentor
+            de Recuperação e Desenvolvimento Humano. O meu foco é apoiar quem
+            está a recuperar (de dependências, comportamentos compulsivos,
+            crises pessoais) e quem procura desenvolver capacidades pessoais
+            essenciais: rotinas saudáveis, autoconhecimento, gestão emocional,
+            definição de objetivos e reinserção social/profissional. O meu
+            método combina conversas orientadas, exercícios práticos (diários de
+            progresso, metas SMART), responsabilização regular e ferramentas de
+            autoavaliação. Trabalho online e presencial, com pacotes
+            estruturados e sessões pontuais de apoio. O objetivo é sempre um
+            plano claro, mensurável e ajustável — porque a recuperação é um
+            processo e cada passo conta.
           </p>
 
           <ul className="mt-6 space-y-2 text-sm">

@@ -18,7 +18,7 @@ export default function AppointmentModal() {
       {/* Botão principal */}
       <Dialog.Trigger asChild>
         <button className="cursor-pointer px-6 py-3 bg-orange-400 text-white rounded-xl hover:bg-brand-orange/80 transition active:scale-[0.98]">
-          Agendar agora
+          Agendar Sessão
         </button>
       </Dialog.Trigger>
 

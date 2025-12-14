@@ -1,99 +1,56 @@
 // app/admin/layout.tsx
-import type { ReactNode } from "react";
 import Link from "next/link";
-import { Calendar, Users, Quote, MessageCircle } from "lucide-react";
-import {Toaster} from 'sonner'
-export const metadata = {
-  title: "Admin • Ricardo Prim Melo",
-};
 
-const navItems = [
-  {
-    href: "/admin/leads",
-    label: "Pessoas",
-    icon: Users,
-  },
-  {
-    href: "/admin/agendamentos",
-    label: "Agenda",
-    icon: Calendar,
-  },
-  {
-    href: "/admin/reflexoes",
-    label: "Reflexões",
-    icon: Quote,
-  },
-  {
-    href: "/admin/depoimentos",
-    label: "Depoimentos",
-    icon: MessageCircle,
-  },
-];
+export const dynamic = "force-dynamic";
 
-export default function AdminLayout({ children }: { children: ReactNode }) {
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="pt-BR">
-      <body className="bg-[#faf7f3] text-[#1a1a1a]">
-        <div className="min-h-screen flex">
+    <div className="min-h-screen bg-[#faf7f3] text-[#1a1a1a]">
+      <div className="mx-auto max-w-7xl px-4 py-6">
+        <div className="grid grid-cols-1 md:grid-cols-[260px_1fr] gap-6">
           {/* Sidebar */}
-          <aside className="hidden md:flex flex-col w-64 border-r border-neutral-200 bg-white/90">
-            <div className="h-20 flex items-center px-6 border-b border-neutral-200">
-              <div>
-                <div className="text-sm font-semibold tracking-tight">
-                  Painel do Ricardo
-                </div>
-                <div className="text-xs text-neutral-500">
-                  Administração básica
-                </div>
-              </div>
+          <aside className="rounded-3xl bg-white border border-neutral-200 shadow-sm p-4 h-fit md:sticky md:top-6">
+            <div className="mb-4">
+              <div className="text-sm text-neutral-500">Painel</div>
+              <div className="text-lg font-bold">Admin</div>
             </div>
 
-            <nav className="flex-1 px-3 py-4 space-y-1">
-              {navItems.map((item) => (
-                <SidebarLink key={item.href} {...item} />
-              ))}
+            <nav className="space-y-2">
+              <AdminNavItem href="/admin/leads" label="Pessoas (Leads)" />
+              <AdminNavItem href="/admin/agendamentos" label="Agenda" />
+              <AdminNavItem href="/admin/reflexoes" label="Reflexões" />
+              <AdminNavItem href="/admin/depoimentos" label="Depoimentos" />
             </nav>
 
-            <div className="px-4 py-3 text-[11px] text-neutral-500 border-t border-neutral-200">
-              v0.1 • uso interno
+            <div className="mt-6 pt-4 border-t border-neutral-200">
+              <Link
+                href="/"
+                className="text-sm text-neutral-600 hover:text-neutral-900"
+              >
+                ← Voltar ao site
+              </Link>
             </div>
           </aside>
 
-          {/* Versão mobile: topo simples */}
-          <div className="md:hidden w-full border-b border-neutral-200 bg-white/90">
-            <div className="h-14 flex items-center justify-between px-4">
-              <span className="text-sm font-semibold">Painel do Ricardo</span>
-              {/* Poderia virar um menu hamburger no futuro */}
-              <span className="text-[11px] text-neutral-500">Admin</span>
-            </div>
-          </div>
-
-          {/* Conteúdo */}
-          <main className="flex-1">
-            {children}
-            <Toaster richColors position="top-center" />
-          </main>
+          {/* Content */}
+          <main className="min-w-0">{children}</main>
         </div>
-      </body>
-    </html>
+      </div>
+    </div>
   );
 }
 
-type SidebarItemProps = {
-  href: string;
-  label: string;
-  icon: React.ComponentType<{ className?: string }>;
-};
-
-function SidebarLink({ href, label, icon: Icon }: SidebarItemProps) {
-  // por enquanto, sem active state real (daria pra usar usePathname)
+function AdminNavItem({ href, label }: { href: string; label: string }) {
   return (
     <Link
       href={href}
-      className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm text-neutral-700 hover:bg-orange-50 hover:text-orange-700 transition"
+      className="block rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm font-medium hover:bg-neutral-50 transition"
     >
-      <Icon className="w-4 h-4" />
-      <span>{label}</span>
+      {label}
     </Link>
   );
 }
