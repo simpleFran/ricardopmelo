@@ -8,6 +8,7 @@ import AppointmentModal from "@/app/components/AppointmentModal";
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, Facebook, Instagram, MapPin, Phone } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 const WHATSAPP_LINK =
   "https://wa.me/+351967246075?text=Quero%20agendar%20uma%20sessao";
@@ -25,12 +26,15 @@ export default function LandingRicardo() {
       <InspiracaoBaralho />
       <SectionSoft />
       <Servicos />
+      <SectionSoft/>
+      <Pacotes/>
+      <SectionSoft />
       <MentorRole />
       <SectionSoft />
       <Sobre />
       <Depoimentos />
       <SectionSoft />
-      <FAQ/>
+      <FAQ />
       <SectionSoft />
       <CTA />
       <Footer />
@@ -59,21 +63,28 @@ function Header() {
         </div>
 
         <nav className="hidden md:flex items-center gap-6 text-sm">
-          <a href="#servicos" className="hover:opacity-70">
+          <Link href="#servicos" className="hover:opacity-70">
             Serviços
-          </a>
-          <a href="#mentor" className="hover:opacity-70">
+          </Link>
+          <Link href="#mentor" className="hover:opacity-70">
             Acompanhamento
-          </a>
-          <a href="#sobre" className="hover:opacity-70">
+          </Link>
+          <Link href="#testemunhos" className="hover:opacity-70">
+            Testemunhos
+          </Link>
+          <Link href="#pacotes" className="hover:opacity-70">
+            {" "}
+            Pacotes{" "}
+          </Link>
+          <Link href="#sobre" className="hover:opacity-70">
             Sobre
-          </a>
-          <a href="#faq" className="hover:opacity-70">
+          </Link>
+          <Link href="#faq" className="hover:opacity-70">
             FAQ
-          </a>
-          <a href="#contato" className="hover:opacity-70">
-            Contato
-          </a>
+          </Link>
+          <Link href="#contato" className="hover:opacity-70">
+            Contacto
+          </Link>
         </nav>
 
         <div className="hidden md:block">
@@ -167,6 +178,147 @@ function SectionSoft() {
     <div className="h-10 w-full bg-gradient-to-b from-orange-50 to-white" />
   );
 }
+// ============================================================================
+// PACOTES & VALORES
+// ============================================================================
+function Pacotes() {
+  const packs = [
+    {
+      badge: "Pacote 1",
+      title: "Pacote Início — 1 mês",
+      price: "100€–160€",
+      items: [
+        "4 sessões × 50 min (1 por semana)",
+        "Plano de ação inicial",
+        "Tarefas semanais",
+        "2 mensagens de suporte por semana",
+      ],
+      highlight: false,
+    },
+    {
+      badge: "Pacote 2",
+      title: "Pacote Transformação — 8 semanas",
+      price: "280€–480€",
+      items: [
+        "8 sessões × 50 min (2 mesociclos: semanas intensivas e de revisão)",
+        "Avaliação inicial",
+        "Plano detalhado",
+        "Worksheets",
+        "Check-ins por mensagem",
+      ],
+      highlight: true,
+    },
+    {
+      badge: "Sessão",
+      title: "Sessão única (avaliação / apoio pontual)",
+      price: "35€–60€",
+      items: ["60–75 min"],
+      highlight: false,
+    },
+    {
+      badge: "Programa",
+      title: "Programa Intensivo — 12 semanas",
+      price: "550€–900€",
+      items: [
+        "12 sessões + materiais",
+        "1 sessão familiar (opcional)",
+        "Quando há compromisso mais profundo",
+      ],
+      highlight: false,
+    },
+  ];
+
+  return (
+    <section id="pacotes" className="scroll-mt-24 max-w-6xl mx-auto px-4 py-16">
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+        <div>
+          <h2 className="text-2xl md:text-3xl font-bold">Pacotes & valores</h2>
+          <p className="text-sm text-neutral-700 mt-2 max-w-2xl">
+            Valores sugeridos em Euro (€). O plano ideal depende do momento, objetivos e nível de suporte necessário.
+          </p>
+        </div>
+
+        {/* CTA opcional pro modal/whats */}
+        <a
+          href="#contato"
+          className="inline-flex items-center justify-center rounded-xl bg-orange-600 text-white px-5 py-3 text-sm font-semibold hover:opacity-95"
+        >
+          Agendar sessão
+        </a>
+      </div>
+
+      <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+        {packs.map((p) => (
+          <article
+            key={p.title}
+            className={[
+              "rounded-3xl border shadow-sm p-6 bg-white",
+              p.highlight
+                ? "border-orange-200 ring-1 ring-orange-200"
+                : "border-neutral-200",
+            ].join(" ")}
+          >
+            <div className="flex items-center justify-between">
+              <span
+                className={[
+                  "text-[11px] font-semibold px-3 py-1 rounded-full border",
+                  p.highlight
+                    ? "bg-orange-50 border-orange-200 text-orange-700"
+                    : "bg-neutral-50 border-neutral-200 text-neutral-700",
+                ].join(" ")}
+              >
+                {p.badge}
+              </span>
+
+              {p.highlight && (
+                <span className="text-[11px] font-semibold text-orange-700">
+                  Mais procurado
+                </span>
+              )}
+            </div>
+
+            <h3 className="mt-4 text-base font-bold text-neutral-900">
+              {p.title}
+            </h3>
+
+            <div className="mt-3">
+              <div className="text-2xl font-bold text-orange-700">{p.price}</div>
+              <div className="text-xs text-neutral-600 mt-1">por pacote</div>
+            </div>
+
+            <ul className="mt-5 space-y-2 text-sm text-neutral-700">
+              {p.items.map((it) => (
+                <li key={it} className="flex gap-2">
+                  <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-orange-600 shrink-0" />
+                  <span>{it}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-6">
+              <a
+                href="#contato"
+                className={[
+                  "w-full inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold transition",
+                  p.highlight
+                    ? "bg-orange-600 text-white hover:opacity-95"
+                    : "bg-white border border-neutral-200 text-neutral-900 hover:bg-neutral-50",
+                ].join(" ")}
+              >
+                Quero este pacote
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div className="mt-8 rounded-2xl border border-neutral-200 bg-white/70 p-5 text-xs text-neutral-600">
+        Observação: Mentoria não é terapia e não substitui acompanhamento médico/psiquiátrico. Em caso de emergência,
+        procure serviços competentes na sua região.
+      </div>
+    </section>
+  );
+}
 
 // ============================================================================
 // O QUE FAZ UM MENTOR – NOVA SEÇÃO
@@ -256,7 +408,7 @@ function FAQ() {
     },
     {
       q: "Como marcar?",
-      a: 'Botão “Agendar sessão” → WhatsApp / Calendly / formulário de contacto, conforme estiver configurado.',
+      a: "Botão “Agendar sessão” → WhatsApp / Calendly / formulário de contacto, conforme estiver configurado.",
     },
   ];
 
@@ -336,7 +488,6 @@ function FAQ() {
     </section>
   );
 }
-
 
 // ============================================================================
 // FRASES MOTIVACIONAIS
@@ -446,10 +597,11 @@ function Quotes() {
 // ============================================================================
 function InspiracaoBaralho() {
   const imgs = [
-    "/images/ricardo/insp1.jpg",
-    "/images/ricardo/insp2.jpg",
-    "/images/ricardo/insp3.jpg",
+    "/images/ricardo/site-ricky1.jpeg",
+    "/images/ricardo/site-ricky2.jpeg",
+    "/images/ricardo/site-ricky3.jpeg",
   ];
+
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -460,13 +612,12 @@ function InspiracaoBaralho() {
   }, []);
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-16">
-      <h2 className="text-2xl md:text-3xl font-bold mb-8">
-        Momentos & Inspiração
-      </h2>
+    <section className="flex flex-col gap-10 max-w-6xl mx-auto px-4 py-16">
+      <h2 className="text-2xl md:text-3xl font-bold">Momentos & Inspiração</h2>
 
-      <div className="relative w-full h-[420px] flex items-center justify-center opacity-90">
-        <AnimatePresence>
+      {/* importante: o wrapper do baralho vem abaixo, com margem real */}
+      <div className="relative mt-12 w-full h-[420px] sm:h-[460px] md:h-[520px] flex items-end justify-center pb-6 opacity-90">
+        <AnimatePresence initial={false}>
           {imgs.map((src, i) => {
             const offset = (i - index + imgs.length) % imgs.length;
             const active = offset === 0;
@@ -474,16 +625,23 @@ function InspiracaoBaralho() {
             return (
               <motion.div
                 key={src}
-                className="absolute w-[60%] max-w-md aspect-[3/4] bg-cover bg-center rounded-3xl shadow-xl"
-                style={{ backgroundImage: `url(${src})` }}
+                className="absolute w-[78%] sm:w-[62%] md:w-[55%] max-w-md aspect-[3/4] rounded-3xl bg-cover bg-center shadow-xl"
+                style={{
+                  backgroundImage: `url(${src})`,
+                  transformOrigin: "center bottom",
+                }}
                 animate={{
                   rotate: offset === 0 ? 0 : offset === 1 ? 8 : -8,
                   x: offset === 0 ? 0 : offset === 1 ? 130 : -130,
-                  scale: active ? 1 : 0.9,
+                  y: active ? 0 : 10,
+                  scale: active ? 1 : 0.92,
                   opacity: active ? 1 : 0,
                   zIndex: active ? 3 : 1,
                 }}
-                transition={{ duration: 1.4 }}
+                transition={{
+                  duration: 1.4,
+                  ease: [0.4, 0, 0.2, 1],
+                }}
               />
             );
           })}
@@ -673,8 +831,8 @@ function Depoimentos() {
   }, []);
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-16">
-      <h2 className="text-2xl md:text-3xl font-bold mb-8">Depoimentos</h2>
+    <section id="testemunhos" className="max-w-6xl mx-auto px-4 py-16 scroll-mt-12">
+      <h2 className="text-2xl md:text-3xl font-bold mb-8">Testemunhos</h2>
 
       {error && <p className="text-sm text-red-600 mb-4">{error}</p>}
 
@@ -768,24 +926,25 @@ function Footer() {
           </div>
 
           <div className="flex items-center gap-4">
-            <a
-              href="#"
+            <Link
+              href="/privacidade"
               className="hover:opacity-70 inline-flex items-center gap-2"
             >
-              <Instagram className="h-4 w-4" /> Instagram
-            </a>
-            <a
-              href="#"
+              Política de Privacidade
+            </Link>
+            <Link
+              href="/termos"
+              className="hover:opacity-70 inline-flex items-center gap-2"
+            >
+              Termos de Uso
+            </Link>
+            <Link
+              href="https://www.facebook.com/ricardo.srg.1"
+              target="_blank"
               className="hover:opacity-70 inline-flex items-center gap-2"
             >
               <Facebook className="h-4 w-4" /> Facebook
-            </a>
-            <a
-              href="#"
-              className="hover:opacity-70 inline-flex items-center gap-2"
-            >
-              <MapPin className="h-4 w-4" /> Localização
-            </a>
+            </Link>
           </div>
         </div>
       </div>
