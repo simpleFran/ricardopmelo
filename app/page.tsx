@@ -32,6 +32,7 @@ export default function LandingRicardo() {
       <MentorRole />
       <SectionSoft />
       <Sobre />
+      <ComoFuncionaSessao />
       <Depoimentos />
       <SectionSoft />
       <FAQ />
@@ -781,6 +782,91 @@ function Sobre() {
             alt="Ricardo"
           />
         </motion.div>
+      </div>
+    </section>
+  );
+}
+function ComoFuncionaSessao() {
+  const steps = [
+    {
+      t: "Check-in rápido",
+      time: "5 min",
+      d: "Como estás hoje? Humor, crises desde a última sessão, sono e principais desafios da semana.",
+    },
+    {
+      t: "Revisão de tarefas e métricas",
+      time: "10–15 min",
+      d: "O que foi feito? O que travou? Ajustamos metas e olhamos para sinais de progresso de forma objetiva.",
+    },
+    {
+      t: "Trabalho ativo",
+      time: "25–30 min",
+      d: "Técnicas, planeamento, role-play, exploração emocional e construção de alternativas práticas para os gatilhos.",
+    },
+    {
+      t: "Plano para a semana",
+      time: "5–10 min",
+      d: "Definimos tarefas concretas até à próxima sessão + critérios claros de sucesso (o que conta como “feito”).",
+    },
+    {
+      t: "Encerramento",
+      time: "2 min",
+      d: "Nota de responsabilidade + um exercício prático curto para levar (ex.: respiração, diário, checklist).",
+    },
+  ];
+
+  return (
+    <section className="max-w-6xl mx-auto px-4 pb-16 scroll-mt-12">
+      <div className="rounded-3xl bg-white border border-neutral-200 shadow-sm p-8 md:p-10">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+          <div>
+            <h3 className="text-xl md:text-2xl font-bold text-neutral-900">
+              Como é uma sessão
+            </h3>
+            <p className="text-neutral-700 mt-2 max-w-3xl">
+              Uma estrutura clara ajuda a manter foco, medir progresso e
+              garantir tarefas aplicáveis no dia a dia — sem perder o lado
+              humano e a escuta.
+            </p>
+          </div>
+
+          <div className="text-xs font-semibold px-3 py-2 rounded-full border border-orange-200 bg-orange-50 text-orange-700 w-fit">
+            Estrutura típica (50 min)
+          </div>
+        </div>
+
+        <ol className="grid md:grid-cols-2 gap-5">
+          {steps.map((s, idx) => (
+            <li
+              key={s.t}
+              className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <span className="shrink-0 text-[11px] font-semibold px-2 py-1 rounded-full border border-orange-200 bg-white text-orange-700 mt-0.5">
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <div className="font-semibold text-neutral-900">{s.t}</div>
+                    <p className="text-sm text-neutral-700 mt-1 leading-relaxed">
+                      {s.d}
+                    </p>
+                  </div>
+                </div>
+
+                <span className="shrink-0 text-[11px] font-semibold px-2 py-1 rounded-full bg-white border border-neutral-200 text-neutral-700">
+                  {s.time}
+                </span>
+              </div>
+            </li>
+          ))}
+        </ol>
+
+        <div className="mt-8 rounded-2xl bg-orange-50 border border-orange-200 p-5 text-sm text-orange-800">
+          <strong>Nota:</strong> A estrutura pode variar conforme o momento e a
+          necessidade (crise, transição, objetivos específicos), mas a ideia é
+          sempre sair com um plano concreto e mensurável.
+        </div>
       </div>
     </section>
   );
