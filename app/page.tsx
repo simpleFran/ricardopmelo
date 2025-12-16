@@ -11,7 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 const WHATSAPP_LINK =
-  "https://wa.me/+351967246075?text=Quero%20agendar%20uma%20sessao";
+  "https://wa.me/+351967246075?text=Quero%20agendar%20uma%20sessao%20";
 
 export default function LandingRicardo() {
   return (
@@ -26,8 +26,8 @@ export default function LandingRicardo() {
       <InspiracaoBaralho />
       <SectionSoft />
       <Servicos />
-      <SectionSoft/>
-      <Pacotes/>
+      <SectionSoft />
+      <Pacotes />
       <SectionSoft />
       <MentorRole />
       <SectionSoft />
@@ -42,49 +42,33 @@ export default function LandingRicardo() {
   );
 }
 
-// ============================================================================
-// HEADER
-// ============================================================================
 function Header() {
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-neutral-200">
-      <div className="max-w-6xl mx-auto px-4 h-20 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-2 h-22 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Image
-            src="/images/logo-transparente.png"
-            alt="Ricardo Prim Melo Logo"
-            className="h-76 w-76 object-contain"
-            width={76}
-            height={76}
-          />
-          {/* <span className="font-semibold tracking-tight hidden sm:block">
-            Ricardo Prim Melo
-          </span> */}
+          <Link href="/">
+            {" "}
+            <Image
+              src="/images/logo-header-48px.png"
+              // src="/images/logo-lst-.png"
+              alt="Ricardo Prim Melo Logo"
+              width={300}
+              height={300}
+              className="h-16 w-auto object-contain"
+              priority
+            />
+          </Link>
         </div>
 
         <nav className="hidden md:flex items-center gap-6 text-sm">
-          <Link href="#servicos" className="hover:opacity-70">
-            Serviços
-          </Link>
-          <Link href="#mentor" className="hover:opacity-70">
-            Acompanhamento
-          </Link>
-          <Link href="#testemunhos" className="hover:opacity-70">
-            Testemunhos
-          </Link>
-          <Link href="#pacotes" className="hover:opacity-70">
-            {" "}
-            Pacotes{" "}
-          </Link>
-          <Link href="#sobre" className="hover:opacity-70">
-            Sobre
-          </Link>
-          <Link href="#faq" className="hover:opacity-70">
-            FAQ
-          </Link>
-          <Link href="#contato" className="hover:opacity-70">
-            Contacto
-          </Link>
+          <Link href="#servicos">Serviços</Link>
+          <Link href="#mentor">Acompanhamento</Link>
+          <Link href="#testemunhos">Testemunhos</Link>
+          <Link href="#pacotes">Pacotes</Link>
+          <Link href="#sobre">Sobre</Link>
+          <Link href="#faq">FAQ</Link>
+          <Link href="#contato">Contacto</Link>
         </nav>
 
         <div className="hidden md:block">
@@ -95,6 +79,7 @@ function Header() {
   );
 }
 
+
 // ============================================================================
 // HERO
 // ============================================================================
@@ -103,7 +88,7 @@ function Hero() {
     <section className="relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-orange-100 via-white to-orange-50" />
 
-      <div className="relative max-w-6xl mx-auto px-4 py-20 grid md:grid-cols-2 gap-10 items-center">
+      <div className="relative max-w-6xl mx-auto px-4 py-4 grid md:grid-cols-2 gap-12 items-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -119,11 +104,21 @@ function Hero() {
             “Da recuperação ao desenvolvimento pessoal — passo a passo.”
           </h1>
 
-          <p className="text-neutral-700 text-lg leading-relaxed max-w-lg">
+          {/* <p className="text-neutral-700 text-lg leading-relaxed max-w-lg">
             Olá, sou <strong>Ricardo Prim Melo</strong>. Ajudo pessoas em
             processo de recuperação a reconquistar equilíbrio, propósito e
             hábitos saudáveis — com orientação prática, apoio emocional e
             ferramentas de desenvolvimento humano.
+          </p> */}
+
+          <p className="text-neutral-700 text-lg leading-relaxed max-w-lg">
+            Sou Mentor de Recuperação e Desenvolvimento Humano. Acompanho
+            pessoas que procuram sair de ciclos adversos (dependências,
+            comportamentos autodestrutivos, perda de rumo) e construir uma
+            vida mais equilibrada e significativa. Trabalho com ferramentas
+            práticas de planeamento, responsabilidade, mudança de hábitos e
+            apoio emocional, criando um plano personalizado que respeita o
+            tempo e o ritmo de cada um.
           </p>
 
           <div className="inline-flex gap-3 flex-wrap">
@@ -145,13 +140,16 @@ function Hero() {
           viewport={{ once: true }}
           className="relative w-full h-[430px] rounded-3xl shadow-xl overflow-hidden"
         >
-          <Image
-            src="/images/ricardo/ricardo-prim-melo.png"
-            alt="Foto de Ricardo Prim Melo"
-            className="w-full h-full object-cover"
-            width={200}
-            height={200}
-          />
+          <div className="relative w-full h-[430px] rounded-3xl shadow-xl overflow-hidden">
+            <Image
+              src="/images/ricardo/ricardo-hero-lst.png"
+              alt="Foto de Ricardo Prim Melo"
+              fill
+              priority
+              className="object-cover object-[50%_20%]"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          </div>
         </motion.div>
       </div>
     </section>
@@ -178,6 +176,12 @@ function SectionSoft() {
     <div className="h-10 w-full bg-gradient-to-b from-orange-50 to-white" />
   );
 }
+
+function buildWaMessage(title: string, items: string[]) {
+  const lines = [title, " ", ...items];
+  return encodeURIComponent(lines.join("\n"));
+}
+
 // ============================================================================
 // PACOTES & VALORES
 // ============================================================================
@@ -234,87 +238,92 @@ function Pacotes() {
         <div>
           <h2 className="text-2xl md:text-3xl font-bold">Pacotes & valores</h2>
           <p className="text-sm text-neutral-700 mt-2 max-w-2xl">
-            Valores sugeridos em Euro (€). O plano ideal depende do momento, objetivos e nível de suporte necessário.
+            Valores sugeridos em Euro (€). O plano ideal depende do momento,
+            objetivos e nível de suporte necessário.
           </p>
         </div>
-
-        {/* CTA opcional pro modal/whats */}
-        <a
-          href="#contato"
-          className="inline-flex items-center justify-center rounded-xl bg-orange-600 text-white px-5 py-3 text-sm font-semibold hover:opacity-95"
-        >
-          Agendar sessão
-        </a>
       </div>
 
       <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
-        {packs.map((p) => (
-          <article
-            key={p.title}
-            className={[
-              "rounded-3xl border shadow-sm p-6 bg-white",
-              p.highlight
-                ? "border-orange-200 ring-1 ring-orange-200"
-                : "border-neutral-200",
-            ].join(" ")}
-          >
-            <div className="flex items-center justify-between">
-              <span
-                className={[
-                  "text-[11px] font-semibold px-3 py-1 rounded-full border",
-                  p.highlight
-                    ? "bg-orange-50 border-orange-200 text-orange-700"
-                    : "bg-neutral-50 border-neutral-200 text-neutral-700",
-                ].join(" ")}
-              >
-                {p.badge}
-              </span>
+        {packs.map((p) => {
+          const waText = buildWaMessage(p.title, p.items);
+          const waUrl = `${WHATSAPP_LINK}\n${waText}`;
 
-              {p.highlight && (
-                <span className="text-[11px] font-semibold text-orange-700">
-                  Mais procurado
+          return (
+            <article
+              key={p.title}
+              className={[
+                "rounded-3xl border shadow-sm p-6 bg-white",
+                "flex flex-col", // ✅ faz o botão “grudar” no fundo com mt-auto
+                p.highlight
+                  ? "border-orange-200 ring-1 ring-orange-200"
+                  : "border-neutral-200",
+              ].join(" ")}
+            >
+              {/* topo: badge */}
+              <div className="flex items-center justify-between">
+                <span
+                  className={[
+                    "text-[11px] font-semibold px-3 py-1 rounded-full border",
+                    p.highlight
+                      ? "bg-orange-50 border-orange-200 text-orange-700"
+                      : "bg-neutral-50 border-neutral-200 text-neutral-700",
+                  ].join(" ")}
+                >
+                  {p.badge}
                 </span>
-              )}
-            </div>
 
-            <h3 className="mt-4 text-base font-bold text-neutral-900">
-              {p.title}
-            </h3>
+                {p.highlight && (
+                  <span className="text-[11px] font-semibold text-orange-700">
+                    Mais procurado
+                  </span>
+                )}
+              </div>
 
-            <div className="mt-3">
-              <div className="text-2xl font-bold text-orange-700">{p.price}</div>
-              <div className="text-xs text-neutral-600 mt-1">por pacote</div>
-            </div>
+              {/* meio: título + preço */}
+              <div className="mt-4">
+                <h3 className="text-base font-bold text-neutral-900">
+                  {p.title}
+                </h3>
 
-            <ul className="mt-5 space-y-2 text-sm text-neutral-700">
-              {p.items.map((it) => (
-                <li key={it} className="flex gap-2">
-                  <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-orange-600 shrink-0" />
-                  <span>{it}</span>
-                </li>
-              ))}
-            </ul>
+                <div className="mt-3">
+                  <div className="text-2xl font-bold text-orange-700">
+                    {p.price}
+                  </div>
+                  <div className="text-xs text-neutral-600 mt-1">
+                    faixa sugerida
+                  </div>
+                </div>
 
-            <div className="mt-6">
-              <a
-                href="#contato"
-                className={[
-                  "w-full inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold transition",
-                  p.highlight
-                    ? "bg-orange-600 text-white hover:opacity-95"
-                    : "bg-white border border-neutral-200 text-neutral-900 hover:bg-neutral-50",
-                ].join(" ")}
-              >
-                Quero este pacote
-              </a>
-            </div>
-          </article>
-        ))}
-      </div>
+                <ul className="mt-5 space-y-2 text-sm text-neutral-700">
+                  {p.items.map((it) => (
+                    <li key={it} className="flex gap-2">
+                      <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-orange-600 shrink-0" />
+                      <span>{it}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-      <div className="mt-8 rounded-2xl border border-neutral-200 bg-white/70 p-5 text-xs text-neutral-600">
-        Observação: Mentoria não é terapia e não substitui acompanhamento médico/psiquiátrico. Em caso de emergência,
-        procure serviços competentes na sua região.
+              {/* base: botão sempre alinhado */}
+              <div className="mt-auto pt-6">
+                <a
+                  href={waUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={[
+                    "w-full inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold transition",
+                    p.highlight
+                      ? "bg-orange-600 text-white hover:opacity-95"
+                      : "bg-white border border-neutral-200 text-neutral-900 hover:bg-neutral-50",
+                  ].join(" ")}
+                >
+                  Quero este pacote
+                </a>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </section>
   );
@@ -408,7 +417,8 @@ function FAQ() {
     },
     {
       q: "Como marcar?",
-      a: "Botão “Agendar sessão” → WhatsApp / Calendly / formulário de contacto, conforme estiver configurado.",
+      // a: "Botão “Agendar sessão” → WhatsApp / Calendly / formulário de contacto, conforme estiver configurado.",
+      a: <AppointmentModal />,
     },
   ];
 
@@ -831,7 +841,10 @@ function Depoimentos() {
   }, []);
 
   return (
-    <section id="testemunhos" className="max-w-6xl mx-auto px-4 py-16 scroll-mt-12">
+    <section
+      id="testemunhos"
+      className="max-w-6xl mx-auto px-4 py-16 scroll-mt-12"
+    >
       <h2 className="text-2xl md:text-3xl font-bold mb-8">Testemunhos</h2>
 
       {error && <p className="text-sm text-red-600 mb-4">{error}</p>}
@@ -889,12 +902,12 @@ function CTA() {
           ver se a mentoria faz sentido para você neste momento.
         </p>
 
-        <a
+        <Link
           href={WHATSAPP_LINK}
           className="inline-flex items-center gap-2 bg-orange-600 text-white px-6 py-3 rounded-xl shadow-md hover:opacity-90"
         >
           <Phone className="h-5 w-5" /> Agendar sessão
-        </a>
+        </Link>
       </div>
     </section>
   );
