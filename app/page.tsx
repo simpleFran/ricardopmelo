@@ -387,10 +387,10 @@ function FAQ() {
       q: "Como pagar / cancelar?",
       a: "Pagamento por transferência / MB WAY / outro — cancelamentos até 24h antes sem custo; depois pode haver taxa.",
     },
-    {
-      q: "Tenho formação?",
-      a: "Aqui inclui cursos, certificações ou experiência voluntária — sem afirmar diplomas que não tens. Quando tiveres os detalhes, eu ajudo a escrever este trecho com precisão.",
-    },
+    // {
+    //   q: "Tenho formação?",
+    //   a: "Aqui inclui cursos, certificações ou experiência voluntária — sem afirmar diplomas que não tens. Quando tiveres os detalhes, eu ajudo a escrever este trecho com precisão.",
+    // },
     {
       q: "Como marcar?",
       // a: "Botão “Agendar sessão” → WhatsApp / Calendly / formulário de contacto, conforme estiver configurado.",
