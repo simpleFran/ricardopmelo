@@ -112,8 +112,8 @@ export default function AppointmentForm({
       reset();
       onSuccess?.();
 
-      toast.success("✅ Agendamento confirmado!", {
-        description: "Entraremos em contato em breve.",
+      toast.success("✅ Pedido recebido!", {
+        description: "Enviamos um email com os próximos passos.",
       });
     } catch (error) {
       console.error(error);

@@ -80,7 +80,6 @@ function Header() {
   );
 }
 
-
 // ============================================================================
 // HERO
 // ============================================================================
@@ -115,11 +114,11 @@ function Hero() {
           <p className="text-neutral-700 text-lg leading-relaxed max-w-lg">
             Sou Mentor de Recuperação e Desenvolvimento Humano. Acompanho
             pessoas que procuram sair de ciclos adversos (dependências,
-            comportamentos autodestrutivos, perda de rumo) e construir uma
-            vida mais equilibrada e significativa. Trabalho com ferramentas
-            práticas de planeamento, responsabilidade, mudança de hábitos e
-            apoio emocional, criando um plano personalizado que respeita o
-            tempo e o ritmo de cada um.
+            comportamentos autodestrutivos, perda de rumo) e construir uma vida
+            mais equilibrada e significativa. Trabalho com ferramentas práticas
+            de planeamento, responsabilidade, mudança de hábitos e apoio
+            emocional, criando um plano personalizado que respeita o tempo e o
+            ritmo de cada um.
           </p>
 
           <div className="inline-flex gap-3 flex-wrap">
@@ -201,34 +200,10 @@ function Pacotes() {
       highlight: false,
     },
     {
-      badge: "Pacote 2",
-      title: "Pacote Transformação — 8 semanas",
-      price: "280€–480€",
-      items: [
-        "8 sessões × 50 min (2 mesociclos: semanas intensivas e de revisão)",
-        "Avaliação inicial",
-        "Plano detalhado",
-        "Worksheets",
-        "Check-ins por mensagem",
-      ],
-      highlight: true,
-    },
-    {
       badge: "Sessão",
       title: "Sessão única (avaliação / apoio pontual)",
       price: "35€–60€",
       items: ["60–75 min"],
-      highlight: false,
-    },
-    {
-      badge: "Programa",
-      title: "Programa Intensivo — 12 semanas",
-      price: "550€–900€",
-      items: [
-        "12 sessões + materiais",
-        "1 sessão familiar (opcional)",
-        "Quando há compromisso mais profundo",
-      ],
       highlight: false,
     },
   ];
@@ -381,23 +356,23 @@ function MentorRole() {
 function FAQ() {
   const items = [
     {
-      q: "És terapeuta?",
+      q: "Sou terapeuta?",
       a: "Não — sou mentor. Ofereço apoio prático, responsabilidade e ferramentas de desenvolvimento. Em caso de necessidade clínica, reencaminho para profissionais adequados.",
     },
     {
       q: "Como funciona uma sessão?",
-      a: "Sessões online ou presenciais, 50 minutos, com tarefas práticas entre sessões.",
+      a: "Sessões online ou presenciais, 60 minutos, com tarefas práticas entre sessões.",
     },
     {
-      q: "Quantas sessões preciso?",
+      q: "Quantas sessões é preciso?",
       a: "Depende dos objetivos. Pacotes de 1 mês (4 sessões) são comuns; programas de 8–12 semanas para mudanças mais profundas.",
     },
     {
-      q: "Trabalhas com dependências?",
+      q: "Trabalho com dependências?",
       a: "Sim — apoio na recuperação, gestão de gatilhos, planeamento e reintegração; não substituo tratamentos médicos.",
     },
     {
-      q: "Falas com a família?",
+      q: "Falo com a família?",
       a: "Sim, com autorização do cliente, posso fazer sessões familiares para orientar comunicação e limites.",
     },
     {
@@ -405,15 +380,15 @@ function FAQ() {
       a: "Sim — suporte por mensagens limitado conforme o pacote contratado.",
     },
     {
-      q: "Privacidade — o que partilhas?",
+      q: "Privacidade — o que eu partilho?",
       a: "Tudo o que falarmos é confidencial salvo risco de dano grave a si ou a terceiros (obrigação legal).",
     },
     {
-      q: "Como pago / cancelo?",
+      q: "Como pagar / cancelar?",
       a: "Pagamento por transferência / MB WAY / outro — cancelamentos até 24h antes sem custo; depois pode haver taxa.",
     },
     {
-      q: "Tens formação?",
+      q: "Tenho formação?",
       a: "Aqui inclui cursos, certificações ou experiência voluntária — sem afirmar diplomas que não tens. Quando tiveres os detalhes, eu ajudo a escrever este trecho com precisão.",
     },
     {
@@ -754,12 +729,12 @@ function Sobre() {
             plano claro, mensurável e ajustável — porque a recuperação é um
             processo e cada passo conta.
           </p>
-
+          <h3 className="text-2xl font-bold mb-4 mt-4">Como trabalho</h3>
           <ul className="mt-6 space-y-2 text-sm">
             {[
-              "Atendimentos online via Microsoft Teams",
-              "Abordagem humana, respeitosa e estruturada",
-              "Ferramentas práticas para aplicar entre uma sessão e outra",
+              "1.​ ​Avaliação inicial para compreender a tua realidade.​",
+              "​2.​ ​Plano personalizado com metas e tarefas práticas.​",
+              "​3.​ ​Acompanhamento regular com responsabilização e ferramentas concretas.",
             ].map((t) => (
               <li key={t} className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 text-orange-600" />
