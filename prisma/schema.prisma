@@ -29,7 +29,7 @@ model Agendamento {
   id           Int      @id @default(autoincrement())
   leadId       Int
   servico      String
-  dataHora     DateTime
+  dataHora     DateTime?
   status       String
   nota         String?
   preferencias String?

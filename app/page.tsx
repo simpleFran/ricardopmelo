@@ -1013,7 +1013,7 @@ function Footer() {
               Termos de Uso
             </Link>
             <Link
-              href="https://www.facebook.com/ricardo.srg.1"
+              href="https://www.facebook.com/profile.php?id=61584570659509"
               target="_blank"
               className="hover:opacity-70 inline-flex items-center gap-2"
             >
