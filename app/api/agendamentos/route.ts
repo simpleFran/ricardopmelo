@@ -4,7 +4,9 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// --- helpers ---------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// helpers
+// ---------------------------------------------------------------------------
 
 function stripQuotes(v?: string) {
   if (!v) return v;
@@ -36,39 +38,32 @@ function renderPedidoAgendamentoEmail({
       </div>
 
       <div style="padding:22px;color:#111827;font-size:15px;line-height:1.6;">
-        <p style="margin:0 0 14px 0;">Olá ${nome},</p>
+        <p>Olá ${nome},</p>
 
-        <p style="margin:0 0 14px 0;">
-          Obrigado por contactares. Para agendarmos a <strong>avaliação inicial (60–75 min)</strong>,
-          indica por favor os teus <strong>3 horários preferidos na próxima semana</strong> e a tua disponibilidade
-          <strong>online/presencial</strong>.
-        </p>
-
-        <p style="margin:0 0 14px 0;">
-          Antes da sessão, envio um breve formulário para perceber melhor a tua situação.
+        <p>
+          Obrigado por contactares. Para agendarmos a
+          <strong>avaliação inicial (60–75 min)</strong>, indica por favor os teus
+          <strong>3 horários preferidos na próxima semana</strong> e a tua
+          disponibilidade <strong>online/presencial</strong>.
         </p>
 
         <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:16px;padding:14px;margin:18px 0;">
-          <div style="font-weight:700;color:#9a3412;margin-bottom:6px;">Responde com:</div>
-          <ul style="margin:0;padding-left:18px;color:#7c2d12;">
-            <li>3 horários preferidos (na próxima semana)</li>
+          <strong>Responde com:</strong>
+          <ul>
+            <li>3 horários preferidos</li>
             <li>Online / Presencial</li>
           </ul>
         </div>
 
         <a href="${whatsappLink}"
-           style="display:inline-block;background:#ea580c;color:#ffffff;text-decoration:none;
-                  padding:12px 16px;border-radius:14px;font-weight:700;">
+           style="display:inline-block;background:#ea580c;color:#fff;padding:12px 16px;border-radius:14px;font-weight:700;">
           Responder pelo WhatsApp
         </a>
 
-        <p style="margin:18px 0 0 0;">Abraço,<br/>
-        <strong>Ricardo Prim Melo</strong><br/>
-        Mentor de Recuperação e Desenvolvimento Humano</p>
-      </div>
-
-      <div style="padding:14px 22px;border-top:1px solid #f0f0f0;color:#6b7280;font-size:12px;">
-        Se recebeste este email por engano, podes ignorá-lo.
+        <p style="margin-top:18px;">
+          Abraço,<br/>
+          <strong>Ricardo Prim Melo</strong>
+        </p>
       </div>
     </div>
   </div>
@@ -76,19 +71,20 @@ function renderPedidoAgendamentoEmail({
 
   const text = `Olá ${nome},
 
-Obrigado por contactares. Para agendarmos a avaliação inicial (60–75 min), indica por favor os teus 3 horários preferidos na próxima semana e a tua disponibilidade online/presencial.
+Para agendarmos a avaliação inicial, envia por favor:
+- 3 horários preferidos
+- Online ou Presencial
 
-Antes da sessão, envio um breve formulário para perceber melhor a tua situação.
-
-Abraço,
-Ricardo Prim Melo — Mentor de Recuperação e Desenvolvimento Humano
+WhatsApp:
 ${whatsappLink}
 `;
 
   return { subject, html, text };
 }
 
-// --- handler ---------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// handler
+// ---------------------------------------------------------------------------
 
 export async function POST(req: Request) {
   try {
@@ -105,39 +101,28 @@ export async function POST(req: Request) {
       nota,
       preferencias,
       modalidade,
-    } = body as {
-      email?: string;
-      nome: string;
-      telefone: string;
-      servico: string;
-      dataHora?: string | Date | null;
-      status?: string;
-      nota?: string;
-      preferencias?: string | null;
-      modalidade?: string | null;
-    };
+    } = body;
 
     if (!nome || !telefone || !servico) {
       return NextResponse.json(
-        { error: "Dados obrigatórios faltando (nome, telefone, servico)." },
+        { error: "Dados obrigatórios faltando." },
         { status: 400 }
       );
     }
 
-    // normaliza telefone (unique no banco)
+    // normaliza telefone
     const telefoneLimpo = String(telefone).replace(/\D/g, "");
 
-    // upsert Lead
+    // upsert lead
     const lead = await prisma.lead.upsert({
       where: { telefone: telefoneLimpo },
       update: { nome, email },
-      create: { telefone: telefoneLimpo, email, nome },
+      create: { telefone: telefoneLimpo, nome, email },
     });
 
-    // dataHora opcional
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const dataHoraDate = dataHora ? new Date(dataHora as any) : null;
+    const dataHoraDate = dataHora ? new Date(dataHora) : null;
 
+    // cria agendamento (OPERAÇÃO CRÍTICA)
     const agendamento = await prisma.agendamento.create({
       data: {
         leadId: lead.id,
@@ -150,23 +135,22 @@ export async function POST(req: Request) {
       },
     });
 
-    // --- WhatsApp link (com preferências reais) ---------------------------
+    // -----------------------------------------------------------------------
+    // side-effects (emails) — NÃO QUEBRAM O FLUXO
+    // -----------------------------------------------------------------------
+
     const whatsappBase =
       stripQuotes(process.env.WHATSAPP_LINK) || "https://wa.me/351967246075";
 
-    const prefs = (preferencias ?? "").trim();
-    const mod = (modalidade ?? "").trim();
-
     const message = `Olá Ricardo, sou ${nome}.
 
-Meus 3 horários preferidos na próxima semana:
-${prefs || "1) __/__/__ às __:__\n2) __/__/__ às __:__\n3) __/__/__ às __:__"}
+Meus horários:
+${preferencias ?? "-"}
 
-Disponibilidade: ${mod || "online/presencial"}`;
+Disponibilidade: ${modalidade ?? "-"}`;
 
     const whatsappLink = buildWhatsAppLink(whatsappBase, message);
 
-    // --- Email config ------------------------------------------------------
     const from =
       stripQuotes(process.env.MAIL_FROM) ||
       "Ricardo Prim Melo <onboarding@resend.dev>";
@@ -177,45 +161,38 @@ Disponibilidade: ${mod || "online/presencial"}`;
     const ricardoInbox =
       stripQuotes(process.env.RICARDO_INBOX) || "ricardoprimmelo@gmail.com";
 
-    // --- Email para o cliente (follow-up principal) ------------------------
+    // email para cliente
     if (email) {
-      const { subject, html, text } = renderPedidoAgendamentoEmail({
-        nome,
-        whatsappLink,
-      });
+      try {
+        const { subject, html, text } = renderPedidoAgendamentoEmail({
+          nome,
+          whatsappLink,
+        });
 
-      const sendClient = await resend.emails.send({
-        from,
-        to: email,
-        subject,
-        html,
-        text,
-        replyTo,
-      });
+        const res = await resend.emails.send({
+          from,
+          to: email,
+          subject,
+          html,
+          text,
+          replyTo,
+        });
 
-      if (sendClient.error) {
-        console.error("Resend error (cliente):", sendClient.error);
-        return NextResponse.json(
-          {
-            ok: false,
-            error: "Falha ao enviar email ao cliente.",
-            details: sendClient.error,
-          },
-          { status: 500 }
-        );
+        if (res.error) {
+          console.error("Email cliente falhou:", res.error);
+        }
+      } catch (err) {
+        console.error("Erro inesperado email cliente:", err);
       }
-
-      console.log("Resend ok (cliente). id:", sendClient.data?.id);
-    } else {
-      console.log("Sem email do cliente — não foi enviado follow-up por email.");
     }
 
-    // --- Email interno para o Ricardo (não bloqueia fluxo) -----------------
-    const sendInternal = await resend.emails.send({
-      from,
-      to: ricardoInbox,
-      subject: `Novo pedido — ${nome}`,
-      text: `Novo pedido recebido:
+    // email interno
+    try {
+      const res = await resend.emails.send({
+        from,
+        to: ricardoInbox,
+        subject: `Novo pedido — ${nome}`,
+        text: `Novo agendamento:
 
 Nome: ${nome}
 Email: ${email ?? "-"}
@@ -223,24 +200,24 @@ Telefone: ${telefoneLimpo}
 Serviço: ${servico}
 Modalidade: ${modalidade ?? "-"}
 Preferências: ${preferencias ?? "-"}
-DataHora (se informada): ${dataHoraDate ? dataHoraDate.toISOString() : "-"}
-Status: ${agendamento.status}
-Agendamento ID: ${agendamento.id}
+ID: ${agendamento.id}
 `,
-      replyTo: email ?? replyTo,
-    });
+        replyTo: email ?? replyTo,
+      });
 
-    if (sendInternal.error) {
-      console.error("Resend error (interno):", sendInternal.error);
-    } else {
-      console.log("Resend ok (interno). id:", sendInternal.data?.id);
+      if (res.error) {
+        console.error("Email interno falhou:", res.error);
+      }
+    } catch (err) {
+      console.error("Erro inesperado email interno:", err);
     }
 
+    // SEMPRE SUCESSO SE CHEGOU AQUI
     return NextResponse.json({ ok: true, agendamento }, { status: 201 });
   } catch (error) {
-    console.log("Erro no POST api/agendamentos", error);
+    console.error("Erro no POST /api/agendamentos:", error);
     return NextResponse.json(
-      { error: "Erro interno ao salvar agendamento" },
+      { error: "Erro interno ao salvar agendamento." },
       { status: 500 }
     );
   }
